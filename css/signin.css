@@ -12,7 +12,8 @@ body {
   flex-direction: column;
   justify-content: space-between;
   text-align: center;
-  width: 100%;  
+  width: 360px;
+  height: 780px;  
   overflow: hidden;
   padding-left: 5%;
   padding-right: 5%;
