@@ -7,9 +7,14 @@ body {
 }
 
 #wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
   width: 100%;
 }
+
 
 .logo {
   width: 197px;
@@ -35,6 +40,10 @@ body {
   width: 90%;
 }
 
+a {
+  text-decoration: none;
+}
+
 .signup_btn {
   display: flex;
   margin: auto;
@@ -48,5 +57,5 @@ body {
 .signup{
   color: #8F6CFF;
   padding-left: 11px;
-  text-decoration: dashed;
+  text-decoration: underline;
 }
