@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalHandler = document.querySelector('.modal-handler');
     const modalBackdrop = document.querySelector('.modal-backdrop');
     const relationSpan = document.querySelector('.relation');
+    const searchContainer = document.querySelector('.signin_input'); // 검색창 컨테이너
     let selectedItem = null; // 현재 선택된 프로필을 저장할 변수
 
     // 프로필 클릭 시
@@ -38,10 +39,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const relationText = btnWrapper.getAttribute('data-relation');
             relationSpan.textContent = ` | ${relationText}`; // .relation에 텍스트 반영
 
-            // 선택된 프로필의 체크마크 숨기기
+            // 선택된 프로필의 체크마크와 검색창 숨기기
             if (selectedItem) {
                 selectedItem.querySelector('.profile-checkmark').style.display = 'none'; // 체크마크 숨김
                 selectedItem.classList.remove('selected'); // 선택 상태 제거
+                searchContainer.style.display = 'none'; // 검색창 숨기기
             }
 
             closeModal();
