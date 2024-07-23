@@ -12,12 +12,36 @@ document.addEventListener('DOMContentLoaded', () => {
     const overlay = document.getElementById('overlay');
     const mealTypeOptions = document.querySelectorAll('.meal-type-option');
 
+    let previousHourValue = '';
+    let previousMinuteValue = '';
+
+    function validateTimeInput() {
+        const hour = parseInt(hourInput.value, 10);
+        const minute = parseInt(minuteInput.value, 10);
+        let isValid = true;
+
+        if (isNaN(hour) || hour < 0 || hour > 24) {
+            isValid = false;
+        }
+        if (isNaN(minute) || minute < 0 || minute > 59) {
+            isValid = false;
+        }
+
+        if (!isValid) {
+            errorMessage.classList.remove('hidden');
+        } else {
+            errorMessage.classList.add('hidden');
+        }
+
+        return isValid;
+    }
+
     function checkInputValidity() {
         const mealType = mealTypeSelect.value;
         const hour = hourInput.value;
         const minute = minuteInput.value;
-        
-        if (mealType && hour >= 0 && hour <= 23 && minute >= 0 && minute <= 59) {
+
+        if (mealType && hour !== '' && minute !== '' && validateTimeInput()) {
             completeButton.classList.add('enabled');
             completeButton.classList.remove('disabled');
             completeButton.disabled = false;
@@ -71,6 +95,40 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    hourInput.addEventListener('input', checkInputValidity);
-    minuteInput.addEventListener('input', checkInputValidity);
+    hourInput.addEventListener('input', () => {
+        const value = hourInput.value;
+        if (!/^\d*$/.test(value) || parseInt(value, 10) < 0 || parseInt(value, 10) > 24) {
+            hourInput.value = previousHourValue;
+            errorMessage.classList.remove('hidden');
+        } else {
+            previousHourValue = value;
+            errorMessage.classList.add('hidden');
+        }
+        checkInputValidity();
+    });
+
+    minuteInput.addEventListener('input', () => {
+        const value = minuteInput.value;
+        if (!/^\d*$/.test(value) || parseInt(value, 10) < 0 || parseInt(value, 10) > 59) {
+            minuteInput.value = previousMinuteValue;
+            errorMessage.classList.remove('hidden');
+        } else {
+            previousMinuteValue = value;
+            errorMessage.classList.add('hidden');
+        }
+        checkInputValidity();
+    });
+
+    hourInput.addEventListener('focus', () => {
+        hourInput.classList.add('input-focused');
+    });
+    hourInput.addEventListener('blur', () => {
+        hourInput.classList.remove('input-focused');
+    });
+    minuteInput.addEventListener('focus', () => {
+        minuteInput.classList.add('input-focused');
+    });
+    minuteInput.addEventListener('blur', () => {
+        minuteInput.classList.remove('input-focused');
+    });
 });

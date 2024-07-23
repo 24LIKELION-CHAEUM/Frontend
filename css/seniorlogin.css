@@ -190,10 +190,19 @@ h2 {
 }
 
 .time-inputs input {
+    width: 50px;
     padding: 10px;
     text-align: center;
     border: 1px solid #ccc;
     border-radius: 5px;
+    
+}
+
+.time-inputs input:focus {
+    border-color: #8F6CFF;
+    box-shadow: 0 0 5px rgba(143, 108, 255, 0.5);
+    outline: none;
+    color: #000;
 }
 
 footer {
@@ -206,6 +215,9 @@ footer {
     color: red;
     display: none;
     margin-top: 10px;
+}
+.error-message.hidden {
+    display: none;
 }
 
 .view.hidden{
