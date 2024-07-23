@@ -201,11 +201,10 @@ a {
     color: #7B7B7E;
 }
 
-/* 기본적으로 체크 표시를 숨김 */
 .profile-checkmark {
     width: 20px;
     height: 20px;
-    display: none; /* 기본적으로 숨김 */
+    display: none;
 }
 
 .profile-checkmark img {
@@ -215,16 +214,16 @@ a {
 
 /* 선택된 아이템에서 체크 표시를 숨김 */
 .result_item.selected .profile-checkmark {
-    display: none; /* 선택된 아이템에서 체크 표시 숨김 */
+    display: none;
 }
 
 /* 선택되지 않은 아이템에서 체크 표시만 보이게 설정 */
 .result_item .profile-checkmark {
-    display: block; /* 선택되지 않은 아이템에서 체크 표시 보이게 함 */
+    display: block;
 }
 
 .modal-content {
-    z-index: 1001; /* 배경보다 앞에 위치 */
+    z-index: 1001;
     position: fixed;
     bottom: -100%;
     left: 50%;
@@ -233,7 +232,7 @@ a {
     padding: 20px;
     border-radius: 10px;
     width: 90%;
-    transition: bottom 0.3s ease-in-out; /* 부드러운 애니메이션 추가 */
+    transition: bottom 0.3s ease-in-out;
 }
 
 .modal-content h2 {
@@ -258,14 +257,14 @@ a {
 }
 
 .modal-backdrop {
-    display: none; /* 기본적으로 숨김 */
+    display: none;
     position: fixed;
-    z-index: 1000; /* 모달 창 뒤에 위치 */
+    z-index: 1000; 
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* 반투명 검정색 */
+    background-color: rgba(0, 0, 0, 0.6); /* 반투명 검정색 */
 }
 
 .modal-backdrop.show {
@@ -296,7 +295,7 @@ a {
     flex-grow: 1;
     background: none;
     border: none;
-    text-align: left; /* 텍스트를 왼쪽 정렬 */
+    text-align: left;
     font-family: 'body2';
     font-size: 14px;
     line-height: 16px;
@@ -309,19 +308,18 @@ a {
 }
 
 .relation-btn-wrapper.selected .relation-btn {
-    color: #8F6CFF; /* 선택된 아이템의 텍스트 색상 */
+    color: #8F6CFF;
 }
 
 .relation-btn-wrapper .checkmark {
     position: relative;
 }
 
-/* 선택된 상태의 체크 표시 이미지 */
+
 .relation-btn-wrapper.selected .checkmark img {
-    content: url('/assets/check_activated.svg'); /* 선택된 상태의 체크 이미지 */
+    content: url('/assets/check_activated.svg'); 
 }
 
-/* 기본 상태의 체크 표시 이미지 */
 .relation-btn-wrapper .checkmark img {
-    content: url('/assets/check_unactivated.svg'); /* 기본 체크 이미지 */
+    content: url('/assets/check_unactivated.svg');
 }
