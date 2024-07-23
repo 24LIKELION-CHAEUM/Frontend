@@ -46,6 +46,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 searchContainer.style.display = 'none'; // 검색창 숨기기
             }
 
+            // 버튼 텍스트 변경
+            signinBtn.textContent = '회원가입 완료';
+
             closeModal();
         });
     });
