@@ -48,8 +48,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // 버튼 텍스트 변경
             signinBtn.textContent = '회원가입 완료';
+            signinBtn.disabled = false; // 버튼 비활성화
 
-            closeModal();
+            // 선택된 관계 버튼의 체크 이미지를 활성화 상태로 변경
+            document.querySelectorAll('.relation-btn-wrapper').forEach(wrapper => {
+                wrapper.classList.remove('selected'); // 모든 버튼의 선택 상태 제거
+            });
+            btnWrapper.classList.add('selected'); // 클릭된 버튼의 선택 상태 추가
+
+            setTimeout(() => {
+                closeModal();
+            }, 1000); // 1초 후에 모달 숨기기
         });
     });
 
