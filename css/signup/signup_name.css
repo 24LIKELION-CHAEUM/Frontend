@@ -13,12 +13,14 @@ body {
     justify-content: space-between;
     text-align: center;
     width: 360px;
-    height: 780px;
     overflow: hidden;
     padding-left: 5%;
     padding-right: 5%;
   }
-  
+  ::placeholder {
+    color: #B2B2B4;
+  }
+
   main {
     display: flex;
     flex-direction: column;

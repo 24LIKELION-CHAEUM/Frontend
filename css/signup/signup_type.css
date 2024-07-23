@@ -13,10 +13,12 @@ body {
   justify-content: space-between;
   text-align: center;
   overflow: hidden;
-    width: 360px;
-  height: 780px;
+  width: 360px;
   padding-left: 5%;
   padding-right: 5%;
+}
+::placeholder {
+  color: #B2B2B4;
 }
 
 main {
