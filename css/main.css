@@ -13,16 +13,22 @@ body {
   align-items: center;
   text-align: center;
   width: 360px;
-  height: 780px;
 }
 
+main {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  align-items: center;
+  justify-content: center;
+}
 
 .logo {
   width: 197px;
   height: 197px;
   background-color: #ccc;
   display: inline-block;
-  margin-top: 153px;
+  margin-top: 20%;
   margin-bottom: 141px;
 }
 
@@ -32,22 +38,25 @@ body {
   border: none;
   padding-top: 14px;
   padding-bottom: 14px;
-  font-size: 14px;
   border-radius: 10px;
   cursor: pointer;
   margin: auto;
-  margin-bottom: 26px;
   display: block;
-  width: 90%;
+  width: 100%;
+  font-family: 'body2';
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: -2%;
 }
 
 a {
   text-decoration: none;
+  width: 100%;
 }
 
 .signup_btn {
   display: flex;
-  margin: auto;
+  margin-top: 24px;
   justify-content: center;
 }
 
@@ -59,4 +68,11 @@ a {
   color: #8F6CFF;
   padding-left: 11px;
   text-decoration: underline;
+}
+
+.comment_signup, .signup {
+  font-family: 'label';
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: -2%;
 }
