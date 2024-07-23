@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>signin</title>
-    <link rel="stylesheet" href="../css/signin.css">
+    <title>signup</title>
+    <link rel="stylesheet" href="../css/signup_id.css">
+    <style>
+        @import url(../css/fonts.css);
+    </style>
 </head>
 <body>
     <div id="wrap">
@@ -25,8 +28,11 @@
                     <input class="input_password" placeholder="비밀번호를 입력해주세요"/>
                 </div>
             </div>
-            <button class="signin_btn">로그인</button>
+            <a href="signup_name.html">
+                <button id="signin_btn" class="signin_btn" disabled>다음</button>
+            </a>
         </main>
     </div>
+    <script src="../js/signin.js"></script>
 </body>
 </html>
