@@ -111,13 +111,13 @@ main {
   font-size: 14px;
   line-height: 18px;
   letter-spacing: -2%;
-  transition: box-shadow 0.3s ease; /* 부드러운 전환 효과 */
+  transition: box-shadow 0.3s ease;
 }
 
 .input_id:focus, .input_password:focus {
-  box-shadow: 0 0 10px rgba(143, 108, 255, 0.15); /* 불투명도 적용한 그림자 효과 */
+  box-shadow: 0 0 10px rgba(143, 108, 255, 0.15);
   border: 1px solid #8F6CFF;
-  outline: none; /* 기본 포커스 스타일 제거 */
+  outline: none;
 }
 
 .signin_btn {
