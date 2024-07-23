@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>signup</title>
+    <link rel="stylesheet" href="../../css/signup/signup_parent.css">
+    <style>
+        @import url(../../css/fonts.css);
+    </style>
+</head>
+<body>
+    <div id="wrap">
+        <main>
+            <div class="topbar">
+                <button type="button" class="back_btn" onclick="window.history.back()">
+                    <img src="../../assets/arrow_back.svg" alt="대체 텍스트">
+                </button>           
+                <span class="comment_login">회원가입</span> 
+            </div>
+            <div class="progress">
+                <progress id="progress" max="100" value="70"></progress>
+            </div>
+            <div class="input">
+                <span class="input_type">함께 서비스를 이용할<br>시니어를 입력해주세요</span>
+
+                <div class="signin_input">
+                    <input class="input_id" id="input_name" placeholder="시니어의 아이디를 검색해보세요"/>
+                        <img src="/assets/search.svg" class="search" alt="검색" />
+                </div>
+
+                <div class="result">
+                    <div class="result_item">
+                        <div class="profile_picture"></div>
+                        <div class="profile_info">
+                            <div class="profile_details">
+                                <span class="birth_date">1945.07.22</span>
+                                <span class="relation"> | 관계</span>
+                            </div>
+                            <div class="profile_name">김철수</div>
+                        </div>
+                        <div class="profile-checkmark">
+                            <img src="/assets/check_unactivated.svg" alt="선택됨" />
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+
+            <a href="">
+                <button id="signin_btn" class="signin_btn" disabled>선택</button>
+            </a>
+            <div class="modal-backdrop"></div>
+
+            <div id="myModal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-handler"></div>
+                    <h2>시니어와의 관계를 선택해주세요</h2>
+                    <p>시니어에게 표시되는 점 참고해주세요</p>
+                    <div>
+                        <div class="relation-btn-wrapper" data-relation="자녀">
+                            <button class="relation-btn">자녀</button>
+                            <div class="checkmark">
+                                <img src="/assets/check_unactivated.svg" alt="선택됨" />
+                            </div>
+                        </div>
+                        <div class="relation-btn-wrapper" data-relation="배우자">
+                            <button class="relation-btn">배우자</button>
+                            <div class="checkmark">
+                                <img src="/assets/check_unactivated.svg" alt="선택됨" />
+                            </div>
+                        </div>
+                        <div class="relation-btn-wrapper" data-relation="간병인">
+                            <button class="relation-btn">간병인</button>
+                            <div class="checkmark">
+                                <img src="/assets/check_unactivated.svg" alt="선택됨" />
+                            </div>
+                        </div>
+                        <div class="relation-btn-wrapper" data-relation="친구">
+                            <button class="relation-btn">친구</button>
+                            <div class="checkmark">
+                                <img src="/assets/check_unactivated.svg" alt="선택됨" />
+                            </div>
+                        </div>
+                        <div class="relation-btn-wrapper" data-relation="기타">
+                            <button class="relation-btn">기타</button>
+                            <div class="checkmark">
+                                <img src="/assets/check_unactivated.svg" alt="선택됨" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </main>
+    </div>
+    <script src="../../js/signup/signup_parent.js"></script>
+</body>
+</html>
