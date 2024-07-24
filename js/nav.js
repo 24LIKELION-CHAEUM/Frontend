@@ -39,6 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
         activeItem.classList.add('active'); 
     }
 
+    // 기본 페이지 로드 및 네비게이션 아이콘 업데이트
     const initialPageId = window.location.pathname.split('/').pop().split('.')[0] || 'home';
     loadPage(initialPageId);
     updateNavIcons(initialPageId);
