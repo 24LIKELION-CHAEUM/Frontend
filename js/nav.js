@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const pageId = this.getAttribute('data-id');
             loadPage(pageId);
             updateNavIcons(pageId);
+            updateActiveNavItem(this);
             window.history.pushState({ pageId }, '', `${pageId}.html`);
         });
     });
@@ -31,16 +32,23 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // 기본 페이지 로드 및 네비게이션 아이콘 업데이트
+    function updateActiveNavItem(activeItem) {
+        navItems.forEach(item => {
+            item.classList.remove('active'); 
+        });
+        activeItem.classList.add('active'); 
+    }
+
     const initialPageId = window.location.pathname.split('/').pop().split('.')[0] || 'home';
     loadPage(initialPageId);
     updateNavIcons(initialPageId);
+    updateActiveNavItem(document.querySelector(`.nav-item[data-id="${initialPageId}"]`)); 
 
-    // 브라우저 뒤로가기/앞으로가기 버튼 처리
     window.addEventListener('popstate', function(event) {
         if (event.state && event.state.pageId) {
             loadPage(event.state.pageId);
             updateNavIcons(event.state.pageId);
+            updateActiveNavItem(document.querySelector(`.nav-item[data-id="${event.state.pageId}"]`)); 
         }
     });
 });
