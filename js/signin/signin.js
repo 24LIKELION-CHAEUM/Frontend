@@ -1,7 +1,7 @@
 // 입력 필드와 버튼을 변수에 저장
 const inputId = document.querySelector('.input_id');
 const inputPassword = document.querySelector('.input_password');
-const signinBtn = document.getElementById('signin_btn');
+const signinBtn = document.getElementById('signin_btn'); // id로 선택
 
 // 입력 필드의 값이 변경될 때 호출되는 함수
 function validateInputs() {
