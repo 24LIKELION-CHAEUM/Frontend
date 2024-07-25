@@ -26,8 +26,7 @@ body {
     width: 360px;
     height: 690px;
     background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -145,13 +144,13 @@ h2 {
 .meal-time-container {
     text-align: left;
     font-size: 14px;
-
 }
 
 .registered-meal-time {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    height: 50px;
     margin-bottom: 10px;
     padding: 10px;
     border-radius: 5px;
@@ -168,18 +167,24 @@ h2 {
 .meal-time-label {
     font-weight: bold;
     color: #000;
+    display: flex;
+    
 }
+
 .meal-time-label img{
     width: 20px;
     height: 20px;
 }
 .meal-time-label span{
     margin-left: 10px;
-    margin-top: 50%;
+    margin-right: auto;   
 }
 
-.meal-times span {
+.meal-times {
     color: #8F6CFF;
+    display: flex;
+    background: none;
+    padding-top: 10px;
 }
 
 .time-inputs {

@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const mainView = document.getElementById('main-view');
     const mealTimeView = document.getElementById('meal-time-view');
     const backToMainButton = document.getElementById('back-to-main');
-    const completeButton = document.querySelector('.complete-button');
+    const registerButton = document.getElementById('register-meal-time');
     const mealTypeSelect = document.getElementById('meal-type-select');
     const hourInput = document.getElementById('hour');
     const minuteInput = document.getElementById('minute');
@@ -11,16 +11,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const bottomSheet = document.getElementById('bottom-sheet');
     const overlay = document.getElementById('overlay');
     const mealTypeOptions = document.querySelectorAll('.meal-type-option');
+    const registeredMealTimeLabel = document.querySelector('.meal-time-label span');
+    const registeredMealTimes = document.querySelector('.meal-times');
+    const completeRegistrationButton = document.querySelector('.complete-button');
 
     let previousHourValue = '';
     let previousMinuteValue = '';
+    let registeredMeals = {};
 
     function validateTimeInput() {
         const hour = parseInt(hourInput.value, 10);
         const minute = parseInt(minuteInput.value, 10);
         let isValid = true;
 
-        if (isNaN(hour) || hour < 0 || hour > 24) {
+        if (isNaN(hour) || hour < 0 || hour > 23) {
             isValid = false;
         }
         if (isNaN(minute) || minute < 0 || minute > 59) {
@@ -42,13 +46,36 @@ document.addEventListener('DOMContentLoaded', () => {
         const minute = minuteInput.value;
 
         if (mealType && hour !== '' && minute !== '' && validateTimeInput()) {
-            completeButton.classList.add('enabled');
-            completeButton.classList.remove('disabled');
-            completeButton.disabled = false;
+            registerButton.classList.add('enabled');
+            registerButton.classList.remove('disabled');
+            registerButton.disabled = false;
         } else {
-            completeButton.classList.remove('enabled');
-            completeButton.classList.add('disabled');
-            completeButton.disabled = true;
+            registerButton.classList.remove('enabled');
+            registerButton.classList.add('disabled');
+            registerButton.disabled = true;
+        }
+    }
+
+    function updateRegisteredMealTimes() {
+        registeredMealTimes.innerHTML = '';
+        Object.keys(registeredMeals).forEach(meal => {
+            const mealSpan = document.createElement('span');
+            mealSpan.textContent = meal;
+            mealSpan.classList.add('registered-meal-time');
+            registeredMealTimes.appendChild(mealSpan);
+        });
+        checkAllMealsRegistered();
+    }
+
+    function checkAllMealsRegistered() {
+        if (registeredMeals['아침'] && registeredMeals['점심'] && registeredMeals['저녁']) {
+            completeRegistrationButton.classList.add('enabled');
+            completeRegistrationButton.classList.remove('disabled');
+            completeRegistrationButton.disabled = false;
+        } else {
+            completeRegistrationButton.classList.remove('enabled');
+            completeRegistrationButton.classList.add('disabled');
+            completeRegistrationButton.disabled = true;
         }
     }
 
@@ -90,14 +117,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     bottomSheet.classList.add('hidden');
                     overlay.classList.add('hidden');
                 }, 300);
-            }, 1000);
+            }, 300);
             checkInputValidity();
         });
     });
 
     hourInput.addEventListener('input', () => {
         const value = hourInput.value;
-        if (!/^\d*$/.test(value) || parseInt(value, 10) < 0 || parseInt(value, 10) > 24) {
+        if (!/^\d*$/.test(value) || parseInt(value, 10) < 0 || parseInt(value, 10) > 23) {
             hourInput.value = previousHourValue;
             errorMessage.classList.remove('hidden');
         } else {
@@ -131,4 +158,21 @@ document.addEventListener('DOMContentLoaded', () => {
     minuteInput.addEventListener('blur', () => {
         minuteInput.classList.remove('input-focused');
     });
+
+    registerButton.addEventListener('click', () => {
+        if (!registerButton.disabled) {
+            const mealType = mealTypeSelect.value;
+
+            registeredMeals[mealType] = true;
+            registeredMealTimeLabel.textContent = '등록된 식사시간';
+            updateRegisteredMealTimes();
+            mealTypeSelect.value = '';
+            hourInput.value = '';
+            minuteInput.value = '';
+            checkInputValidity();
+        }
+    });
+
+    // Call checkInputValidity initially to ensure button is correctly enabled/disabled on page load
+    checkInputValidity();
 });
