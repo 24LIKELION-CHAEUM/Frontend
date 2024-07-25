@@ -150,13 +150,13 @@ main {
 
 
 .dropdown {
-    width: 90%;
+    width: 85%;
     background: #fff;
     border: 1px solid #ccc;
     border-radius: 8px;
     margin-top: 182px;
     padding: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(143, 108, 255, 0.15);
     position: absolute;
     z-index: 1000;
     left: 50%; 
@@ -167,6 +167,11 @@ main {
     display: flex;
     align-items: center;
     padding: 10px 0;
+    margin-bottom: 12px; 
+}
+
+.dropdown-item:last-child {
+    margin-bottom: 0;
 }
 
 
