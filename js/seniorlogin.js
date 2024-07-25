@@ -1,12 +1,19 @@
 document.addEventListener('DOMContentLoaded', () => {
     const mealTimeButton = document.getElementById('meal-time');
+    const medicationButton = document.getElementById('medication');
     const mainView = document.getElementById('main-view');
     const mealTimeView = document.getElementById('meal-time-view');
+    const medicationView = document.getElementById('medication-view');
     const backToMainButton = document.getElementById('back-to-main');
+    const backToMainMedicationButton = document.getElementById('back-to-main-medication');
     const registerButton = document.getElementById('register-meal-time');
     const mealTypeSelect = document.getElementById('meal-type-select');
     const hourInput = document.getElementById('hour');
     const minuteInput = document.getElementById('minute');
+    const medicationNameInput = document.getElementById('medication-name');
+    const medicationHourInput = document.getElementById('medication-hour');
+    const medicationMinuteInput = document.getElementById('medication-minute');
+    const medicationDays = document.querySelectorAll('.day-button');
     const errorMessage = document.getElementById('error-message');
     const bottomSheet = document.getElementById('bottom-sheet');
     const overlay = document.getElementById('overlay');
@@ -14,10 +21,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const registeredMealTimeLabel = document.querySelector('.meal-time-label span');
     const registeredMealTimes = document.querySelector('.meal-times');
     const completeRegistrationButton = document.querySelector('.complete-button');
+    const registeredMedicationContainer = document.querySelector('.registered-medication');
+    const medicationCountElement = document.querySelector('.medication-count');
 
     let previousHourValue = '';
     let previousMinuteValue = '';
     let registeredMeals = {};
+    let registeredMedications = [];
 
     function validateTimeInput() {
         const hour = parseInt(hourInput.value, 10);
@@ -86,6 +96,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     backToMainButton.addEventListener('click', () => {
         mealTimeView.classList.add('hidden');
+        mainView.classList.remove('hidden');
+    });
+
+    medicationButton.addEventListener('click', () => {
+        mainView.classList.add('hidden');
+        medicationView.classList.remove('hidden');
+    });
+
+    backToMainMedicationButton.addEventListener('click', () => {
+        medicationView.classList.add('hidden');
         mainView.classList.remove('hidden');
     });
 
@@ -159,19 +179,93 @@ document.addEventListener('DOMContentLoaded', () => {
         minuteInput.classList.remove('input-focused');
     });
 
-    registerButton.addEventListener('click', () => {
-        if (!registerButton.disabled) {
-            const mealType = mealTypeSelect.value;
+    medicationNameInput.addEventListener('focus', () => {
+        medicationNameInput.classList.add('input-focused');
+    });
+    medicationNameInput.addEventListener('blur', () => {
+        medicationNameInput.classList.remove('input-focused');
+    });
 
-            registeredMeals[mealType] = true;
-            registeredMealTimeLabel.textContent = '등록된 식사시간';
-            updateRegisteredMealTimes();
-            mealTypeSelect.value = '';
-            hourInput.value = '';
-            minuteInput.value = '';
-            checkInputValidity();
+    medicationNameInput.addEventListener('input', () => {
+        medicationNameInput.style.color = '#000';
+        checkMedicationInputValidity();
+    });
+
+    medicationHourInput.addEventListener('input', () => {
+        medicationHourInput.style.color = '#000';
+        checkMedicationInputValidity();
+    });
+
+    medicationMinuteInput.addEventListener('input', () => {
+        medicationMinuteInput.style.color = '#000';
+        checkMedicationInputValidity();
+    });
+
+    medicationDays.forEach(dayButton => {
+        dayButton.addEventListener('click', () => {
+            dayButton.classList.toggle('selected');
+            checkMedicationInputValidity();
+        });
+    });
+
+    function checkMedicationInputValidity() {
+        const medicationName = medicationNameInput.value.trim();
+        const hour = medicationHourInput.value.trim();
+        const minute = medicationMinuteInput.value.trim();
+        const selectedDays = Array.from(medicationDays).filter(dayButton => dayButton.classList.contains('selected')).length;
+
+        if (medicationName && hour && minute && selectedDays > 0 && validateMedicationTimeInput() && registeredMedications.length < 3) {
+            document.getElementById('register-medication').classList.add('enabled');
+            document.getElementById('register-medication').classList.remove('disabled');
+            document.getElementById('register-medication').disabled = false;
+        } else {
+            document.getElementById('register-medication').classList.remove('enabled');
+            document.getElementById('register-medication').classList.add('disabled');
+            document.getElementById('register-medication').disabled = true;
+        }
+    }
+
+    function validateMedicationTimeInput() {
+        const hour = parseInt(medicationHourInput.value, 10);
+        const minute = parseInt(medicationMinuteInput.value, 10);
+        return !isNaN(hour) && hour >= 0 && hour <= 23 && !isNaN(minute) && minute >= 0 && minute <= 59;
+    }
+
+    document.getElementById('register-medication').addEventListener('click', () => {
+        if (!document.getElementById('register-medication').disabled) {
+            const medicationName = medicationNameInput.value.trim();
+            const hour = medicationHourInput.value.trim().padStart(2, '0');
+            const minute = medicationMinuteInput.value.trim().padStart(2, '0');
+            const selectedDays = Array.from(medicationDays).filter(dayButton => dayButton.classList.contains('selected')).map(dayButton => dayButton.textContent).join(',');
+
+            registeredMedications.push({
+                name: medicationName,
+                time: `${hour}:${minute}`,
+                days: selectedDays
+            });
+
+            updateRegisteredMedications();
+            medicationNameInput.value = '';
+            medicationHourInput.value = '';
+            medicationMinuteInput.value = '';
+            medicationDays.forEach(dayButton => dayButton.classList.remove('selected'));
+            checkMedicationInputValidity();
         }
     });
+
+    function updateRegisteredMedications() {
+        const medicationCount = registeredMedications.length;
+        if (medicationCount > 0) {
+            document.querySelector('.registered-medication .medication-label span').textContent = '등록된 약';
+        }
+        medicationCountElement.textContent = `${medicationCount}회`;
+        if (medicationCount === 3) {
+            document.getElementById('register-medication').classList.remove('enabled');
+            document.getElementById('register-medication').classList.add('disabled');
+            document.getElementById('register-medication').disabled = true;
+        }
+        // Update the UI with the registered medications if needed
+    }
 
     // Call checkInputValidity initially to ensure button is correctly enabled/disabled on page load
     checkInputValidity();

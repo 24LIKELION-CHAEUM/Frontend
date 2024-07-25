@@ -81,6 +81,52 @@
             </footer>
         </div>
 
+        <!-- Medication Registration View -->
+        <div id="medication-view" class="view hidden">
+            <header>
+                <button class="back-button" id="back-to-main-medication">
+                    <img src="../img/back.png" alt="뒤로가기">
+                </button>
+                <h3>투약할 약 등록하기</h3>
+            </header>
+            <main>
+                <div class="medication-container">
+                    <div class="registered-medication">
+                        <div class="medication-label">
+                            <img src="../img/pill.png" alt="투약할 약 등록하기">
+                            <span class="text">투약 시간을 등록해 주세요</span>
+                            <div class="medication-count"></div>
+                        </div>
+                    </div>
+                    <p>최대 3개까지 약을 등록할 수 있어요</p>
+                    
+                    <h2>약 등록하기</h2>
+                    <label for="medication-name">투약하는 약의 이름</label>
+                    <input type="text" id="medication-name" placeholder="투약하는 약의 이름을 입력해주세요">
+                    <label for="medication-hour">투약 시간</label>
+                    <div class="time-inputs">
+                        <input type="text" id="medication-hour" maxlength="2" placeholder="00" class="time-input" inputmode="numeric" pattern="[0-9]*"> 시
+                        <input type="text" id="medication-minute" maxlength="2" placeholder="00" class="time-input" inputmode="numeric" pattern="[0-9]*"> 분
+                        
+                    </div>
+                    <label for="medication-days">투약 반복</label>
+                    <div class="medication-days">
+                        <button class="day-button">월</button>
+                        <button class="day-button">화</button>
+                        <button class="day-button">수</button>
+                        <button class="day-button">목</button>
+                        <button class="day-button">금</button>
+                        <button class="day-button">토</button>
+                        <button class="day-button">일</button>
+                    </div>
+                </div>
+            </main>
+            <footer>
+                <button class="complete-button" id="register-medication">등록</button>
+            </footer>
+        </div>
+
+
         <!-- Bottom Sheet -->
         <div id="bottom-sheet" class="bottom-sheet hidden">
             <div class="bottom-sheet-content">

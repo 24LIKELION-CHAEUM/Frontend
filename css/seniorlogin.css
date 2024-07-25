@@ -140,7 +140,7 @@ h2 {
     height: 13px;
     transform: translateY(-50%);
 }
-
+ /*식사시간 등록*/
 .meal-time-container {
     text-align: left;
     font-size: 14px;
@@ -198,7 +198,7 @@ h2 {
     width: 50px;
     padding: 10px;
     text-align: center;
-    border: 1px solid #ccc;
+    border: 1px solid #AFB8C1;
     border-radius: 5px;
     
 }
@@ -214,6 +214,134 @@ footer {
     padding: 10px;
     background-color: #fff;
     text-align: center;
+}
+
+/*투약할 약 등록관련*/
+.medication-container {
+    text-align: left;
+    font-size: 14px;
+}
+
+.registered-medication {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    height: 50px;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    background: #f7f8fa;
+}
+.medication-container p {
+    font-size: 12px;
+    color: #7b7b72;
+}
+
+.medication-label {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    margin-top: 5px;
+    color: #000;
+}
+.medication-label span {
+    margin-right: auto;
+}
+.medication-label .text {
+    flex-grow: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.medication-count {
+    display: flex;
+    color: #6838ff;
+    margin-left: 180px;
+    
+}
+
+.medication-label img {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+
+.medication-container h2 {
+    margin-top: 15%;
+}
+
+.medication-container label {
+    display: block;
+    margin-top: 10px;
+}
+
+.medication-container input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #AFB8C1;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.time-inputs {
+    display: flex;
+    justify-content: left;
+    gap: 10px;
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+
+.time-inputs input {
+    width: 50px;
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #AFB8C1;
+    border-radius: 5px;
+    
+}
+
+.medication-days {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;   
+}
+
+.day-button {
+    padding: 10px;
+    border: 1px solid #AFB8C1;
+    border-radius: 5px;
+    background: none;
+    cursor: pointer;
+    color: #7b7b72;
+    width: 40px;
+    height: 48px;
+}
+
+.day-button.selected {
+    background: #f6f4ff;
+    border: #f6f4ff;;
+    color: #8F6CFF;
+}
+
+#medication-name
+{
+    width: 100%;
+    padding: 15px;
+    border-radius: 10px;
+    border:1px solid #AFB8C1;
+    color: #000;
+    margin-top: 10px;
+    margin-bottom: 30px;
+
+}
+#medication-name:focus
+{
+    border-color: #8F6CFF;
+    box-shadow: 0 0 5px rgba(143, 108, 255, 0.5);
+    outline: none;
+    color: #000;
 }
 
 #error-message {
