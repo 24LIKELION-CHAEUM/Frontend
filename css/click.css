@@ -1,0 +1,148 @@
+body {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+#wrap {
+    margin-top: 0;
+    margin-bottom: 68px; /* 네비게이션 바의 높이만큼 여백 추가 */
+    overflow: auto;
+    width: 100%;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+}
+
+.page-title {
+    flex-grow: 1;
+    text-align: center;
+    font-family: 'body1';
+    font-size: 18px;
+    line-height: 32px;
+    letter-spacing: -2%;
+    padding-top: 36px;
+    padding-bottom: 28px;
+}
+
+.signin_input {
+    text-align: start;
+    padding-top: 19px;
+    position: relative;
+}
+
+.search {
+    position: absolute;
+    width: 20px;
+    top: 43px;
+    right: 16px;
+    margin: 0;
+}
+
+.input_id {
+    width: 90%;
+    margin-top: 8px;
+    margin-bottom: 16px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border: 1px solid #B2B2B4;
+    border-radius: 12px;
+    font-family: 'body3';
+    font-size: 14px;
+    line-height: 18px;
+    letter-spacing: -2%;
+    transition: box-shadow 0.3s  ease-in-out;
+}
+
+.input_id:focus, .input_password:focus {
+    box-shadow: 0 0 10px rgba(143, 108, 255, 0.15);
+    border: 1px solid #8F6CFF;
+    outline: none;
+}
+
+.result {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.result_item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 360px;
+    height: 96px;
+    border-radius: 12px;
+}
+
+.profile_picture {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    background-color: black;
+    border-radius: 50%;
+    margin-right: 12px;
+}
+
+.profile_info {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    flex-grow: 1;
+    align-items: flex-start;
+}
+
+.profile_name {
+    font-family: 'body2';
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: -2%;
+    padding-top: 4px;
+}
+
+.profile_name2 {
+    font-family: 'label';
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: -2%;
+    padding-top: 4px;
+    color: #8C8C8E;
+}
+.profile_name3 {
+    font-family: 'semibold';
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: -2%;
+    color: #ffffff;
+}
+
+.birth_date, .relation {
+    margin-right: 5px;
+    font-family: 'body2';
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: -2%;
+    color: #7B7B7E;
+}
+
+.profile-checkmark {
+    display: flex;
+    width: 107px;
+    height: 29px;
+    justify-content: center;
+    align-items: center;
+    background-color: #8F6CFF;
+    border-radius: 5px;
+    gap: 8px;
+}
+
+.profile-checkmark img {
+    width: 15px;
+    height: 15px;
+}
