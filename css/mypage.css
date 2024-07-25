@@ -226,7 +226,8 @@ main {
     transform: translate(-50%, 0);
     background-color: #fefefe;
     padding: 20px;
-    border-radius: 10px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
     width: 90%;
     transition: bottom 0.3s ease-in-out;
 }
