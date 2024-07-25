@@ -95,9 +95,22 @@ function initializeMypage() {
         }
     });
 
+
     function closeModal() {
         modal.classList.remove('show');
         modalBackdrop.classList.remove('show');
+        
+        const inputName = document.getElementById('name');
+        const inputDob = document.getElementById('birthdate');
+        const dobError = document.getElementById('dob_error');
+        
+        inputName.value = '';
+        inputDob.value = '';
+        dobError.style.display = 'none';
+        inputDob.classList.remove('error');
+        
+        const signinBtn = document.getElementById('submit-button');
+        signinBtn.disabled = true;
     }
 }
 
