@@ -272,8 +272,7 @@ main {
     width: 100px;
     height: 100px;
     justify-content: center;
-    margin-bottom: 20px;
-    margin: auto;
+    margin: 40px auto 30px auto;
 }
 
 .profile-picture-large {
