@@ -256,7 +256,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateRegisteredMedications() {
         const medicationCount = registeredMedications.length;
         if (medicationCount > 0) {
-            document.querySelector('.registered-medication .medication-label span').textContent = '등록된 약';
+            document.querySelector('.registered-medication .medication-label .text').textContent = '등록된 약';
         }
         medicationCountElement.textContent = `${medicationCount}회`;
         if (medicationCount === 3) {
@@ -264,8 +264,23 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('register-medication').classList.add('disabled');
             document.getElementById('register-medication').disabled = true;
         }
-        // Update the UI with the registered medications if needed
     }
+
+    registerButton.addEventListener('click', () => {
+        if (!registerButton.disabled) {
+            const mealType = mealTypeSelect.value;
+            const hour = hourInput.value.padStart(2, '0');
+            const minute = minuteInput.value.padStart(2, '0');
+
+            registeredMeals[mealType] = `${hour}:${minute}`;
+            registeredMealTimeLabel.textContent = '등록된 식사시간';
+            updateRegisteredMealTimes();
+            mealTypeSelect.value = '';
+            hourInput.value = '';
+            minuteInput.value = '';
+            checkInputValidity();
+        }
+    });
 
     // Call checkInputValidity initially to ensure button is correctly enabled/disabled on page load
     checkInputValidity();
