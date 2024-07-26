@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/nav.css"> 
+    <link rel="stylesheet" href="/css/mypage.css"> 
+    <style>
+        @import url(/css/fonts.css);
+    </style>
+</head>
+<body>
+    <div id="wrap">
+        <main id="main-content">
+            <span class="page-title">마이페이지</span> 
+        
+            <div class="myprofile-section">
+                <div class="myprofile-item">
+                    <div class="myprofile-picture"></div>
+                    <div class="myprofile-info">
+                        <div class="myprofile-details">
+                            <span class="myprofile-name">홍길동</span>
+                            <span class="myprofile-relation"> 시니어 </span>
+                        </div>
+                        <span class="myprofile-birthdate">1945.06.21</span>
+                    </div>
+                    <button class="my-edit-profile-button">수정</button>
+                </div>
+            </div>
+        
+            <span class="section-title">연결된 보호자 목록</span> 
+        
+            <div class="guardian-section">
+                <div class="guardian-item">
+                    <div class="profile-picture"></div>
+                    <div class="profile-info">
+                        <div class="profile-details">
+                            <span class="profile-birthdate">1972.07.22</span>
+                            <span class="profile-relation"> | 관계</span>
+                        </div>
+                        <div class="profile-name">김철수</div>
+                    </div>
+                    <button class="remove-guardian-button">삭제</button>
+                </div>
+            </div>
+            
+            <span class="section-title">보호자 연결 요청</span> 
+        
+            <div class="request-section">
+                <div class="request-item">
+                    <div class="profile-picture"></div>
+                    <div class="profile-info">
+                        <div class="profile-details">
+                            <span class="profile-birthdate">1972.07.22</span>
+                            <span class="profile-relation"> | 관계</span>
+                        </div>
+                        <div class="profile-name">김철수</div>
+                    </div>
+                    <div class="request-button">
+                        <button class="accept-request-button">수락</button>
+                        <button class="reject-request-button">거부</button>
+                    </div>
+                </div>
+            </div>
+
+            <!--modal-->
+            <div class="modal-backdrop"></div>
+            <div id="modal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <span class="close" onclick="closeModal()">취소</span>
+                        <div class="modal-title">내 정보 수정하기</div>
+                    </div>
+                    <div class="profile-picture-edit">
+                        <div class="profile-picture-large"></div>
+                        <img class="edit-icon" src="/assets/pencil.svg" alt="선택되지 않음">
+                    </div>
+                    <div class="form-group">
+                        <label for="name">이름</label>
+                        <input type="text" id="name" placeholder="이름을 입력해주세요">
+                    </div>
+                    <div class="form-group">
+                        <label for="birthdate">생년월일</label>
+                        <input type="text" id="birthdate" placeholder="생년월일 8자를 입력해주세요">
+                    </div>
+                    <button id="submit-button" class="submit-button" disabled>수정</button>
+                </div>
+            </div>
+        </main>
+
+
+        <!--navigation-->
+        <footer class="navbar">
+            <a href="/html/senior/home.html" class="nav-item">
+                <img src="/assets/nav/nav_home_inactive.svg" alt="홈" class="nav-icon">
+                <span class="nav-text">홈</span>
+            </a>
+            <a href="/html/senior/welfare.html" class="nav-item">
+                <img src="/assets/nav/nav_building_inactive.svg" alt="복지시설" class="nav-icon">
+                <span class="nav-text">복지시설</span>
+            </a>
+            <a href="/html/senior/click.html" class="nav-item">
+                <img src="/assets/nav/nav_finger_inactive.svg" alt="콕찌르기" class="nav-icon">
+                <span class="nav-text">콕찌르기</span>
+            </a>
+            <a href="/html/senior/mypage.html" class="nav-item">
+                <img src="/assets/nav/nav_user_active.svg" alt="마이페이지" class="nav-icon">
+                <span class="nav-text">마이페이지</span>
+            </a>
+        </footer>
+    </div>
+    <script src="/js/senior/mypage.js"></script>
+</body>
+</html>
