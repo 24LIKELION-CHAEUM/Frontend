@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
     const dropdownMenu = document.getElementById('dropdown-menu');
     const searchButton = document.getElementById("search-button");
+    const clearButton = document.getElementById("clear-button");
+    const searchInput = document.getElementById('search-input');  
     const checkmarkButtons = document.querySelectorAll('.profile-checkmark');
     const checkmarkLabel = document.querySelectorAll('.dropdown-checkmark');
 
@@ -17,7 +19,10 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     searchButton.addEventListener("click", function() {
-        dropdownMenu.style.display = 'block';
+        if (searchInput.value.trim() !== '') {
+            dropdownMenu.style.display = 'block';
+            clearButton.style.display = 'none';
+        }
     });
 
     checkmarkButtons.forEach(button => {
@@ -35,6 +40,15 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('click', function(event) {
         if (dropdownMenu.style.display === 'block' && !dropdownMenu.contains(event.target) && !searchButton.contains(event.target)) {
             dropdownMenu.style.display = 'none';
+            searchButton.style.display = 'none';
+            clearButton.style.display = 'block';
         }
+    });
+
+    clearButton.addEventListener('click', function() {
+        searchInput.value = ''; 
+        dropdownMenu.style.display = 'none';  
+        searchButton.style.display = 'block';  
+        clearButton.style.display = 'none';  
     });
 });
