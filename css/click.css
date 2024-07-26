@@ -29,14 +29,15 @@ main {
     padding-bottom: 28px;
 }
 
-.signin_input {
+.search-input {
     text-align: start;
     height: 48px;
     padding-top: 19px;
     position: relative;
+    margin-bottom: 16px;
 }
 
-.search_button,.clear_button {
+.search-button, .clear-button {
     position: absolute;
     width: 20px;
     top: 43px;
@@ -44,10 +45,9 @@ main {
     margin: 0;
 }
 
-.input_id {
+.input-field {
     width: 90%;
     margin-top: 8px;
-    margin-bottom: 16px;
     padding-top: 15px;
     padding-bottom: 15px;
     padding-left: 15px;
@@ -61,19 +61,19 @@ main {
     transition: box-shadow 0.3s  ease-in-out;
 }
 
-.input_id:focus, .input_password:focus {
+.input-field:focus {
     box-shadow: 0 0 10px rgba(143, 108, 255, 0.15);
     border: 1px solid #8F6CFF;
     outline: none;
 }
 
-.result {
+.result-list {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.result_item {
+.result-item {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -82,7 +82,7 @@ main {
     border-radius: 12px;
 }
 
-.profile_picture {
+.profile-picture {
     width: 40px;
     height: 40px;
     flex-shrink: 0;
@@ -91,7 +91,7 @@ main {
     margin-right: 12px;
 }
 
-.profile_info {
+.profile-info {
     display: flex;
     flex-direction: column;
     justify-content: start;
@@ -99,7 +99,7 @@ main {
     align-items: flex-start;
 }
 
-.profile_name {
+.profile-name {
     font-family: 'body2';
     font-size: 16px;
     line-height: 20px;
@@ -107,7 +107,7 @@ main {
     padding-top: 4px;
 }
 
-.profile_name2 {
+.profile-status {
     font-family: 'label';
     font-size: 12px;
     line-height: 16px;
@@ -115,7 +115,7 @@ main {
     padding-top: 4px;
     color: #8C8C8E;
 }
-.profile_name3 {
+.checkmark-label {
     font-family: 'semibold';
     font-size: 12px;
     line-height: 16px;
@@ -123,7 +123,11 @@ main {
     color: #ffffff;
 }
 
-.birth_date, .relation {
+.dropdown-checkmark.disabled {
+    background-color: #7B7B7E;
+}
+
+.role, .timestamp {
     margin-right: 5px;
     font-family: 'body2';
     font-size: 12px;
@@ -141,15 +145,17 @@ main {
     background-color: #8F6CFF;
     border-radius: 5px;
     gap: 8px;
+    cursor: pointer;
 }
-
+.profile-checkmark.disabled {
+    background-color: #7B7B7E;
+}
 .profile-checkmark img {
     width: 15px;
     height: 15px;
 }
 
-
-.dropdown {
+.dropdown-menu {
     width: 85%;
     background: #fff;
     border: 1px solid #ccc;
@@ -174,8 +180,7 @@ main {
     margin-bottom: 0;
 }
 
-
-.dropdownprofile_picture {
+.dropdown-profile-picture {
     width: 40px;
     height: 40px;
     flex-shrink: 0;
@@ -185,7 +190,7 @@ main {
     margin-right: 12px;
 }
 
-.dropdownprofile_info {
+.dropdown-profile-info {
     display: flex;
     flex-direction: column;
     justify-content: start;
@@ -193,7 +198,7 @@ main {
     align-items: flex-start;
 }
 
-.dropdownprofile_name {
+.dropdown-profile-name {
     font-family: 'body2';
     font-size: 16px;
     line-height: 20px;
@@ -201,14 +206,15 @@ main {
     padding-top: 4px;
 }
 
-.dropdownprofile_name3 {
+.dropdown-checkmark-label {
     font-family: 'semibold';
     font-size: 12px;
     line-height: 16px;
     letter-spacing: -2%;
     color: #ffffff;
 }
-.dropdownprofile-checkmark {
+
+.dropdown-checkmark {
     display: flex;
     width: 88px;
     height: 29px;
@@ -220,7 +226,7 @@ main {
     margin-right: 6px;
 }
 
-.dropdownprofile-checkmark img {
+.dropdown-checkmark img {
     width: 15px;
     height: 15px;
 }
