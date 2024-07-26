@@ -70,8 +70,10 @@
                     <br><input type="text" id="meal-type-select" placeholder="식사 시간 구분을 선택해주세요" readonly>
                     <br><label for="hour">시간</label>
                     <div class="time-inputs">
-                        <input type="text" id="hour" maxlength="2" placeholder="00" class="time-input" inputmode="numeric" pattern="[0-9]*"> 시
-                        <input type="text" id="minute" maxlength="2" placeholder="00" class="time-input" inputmode="numeric" pattern="[0-9]*"> 분
+                        <input type="text" id="hour" maxlength="2" placeholder="00" class="time-input" inputmode="numeric" pattern="[0-9]*"> 
+                        <span>시</span>
+                        <input type="text" id="minute" maxlength="2" placeholder="00" class="time-input" inputmode="numeric" pattern="[0-9]*"> 
+                        <span>분</span>
                     </div>
                     <p id="error-message" class="error-message hidden">입력하신 내용을 다시 확인해주세요</p>
                 </div>
@@ -105,8 +107,10 @@
                     <input type="text" id="medication-name" placeholder="투약하는 약의 이름을 입력해주세요">
                     <label for="medication-hour">투약 시간</label>
                     <div class="time-inputs">
-                        <input type="text" id="medication-hour" maxlength="2" placeholder="00" class="time-input" inputmode="numeric" pattern="[0-9]*"> 시
-                        <input type="text" id="medication-minute" maxlength="2" placeholder="00" class="time-input" inputmode="numeric" pattern="[0-9]*"> 분
+                        <input type="text" id="medication-hour" maxlength="2" placeholder="00" class="time-input" inputmode="numeric" pattern="[0-9]*">
+                        <span>시</span>
+                        <input type="text" id="medication-minute" maxlength="2" placeholder="00" class="time-input" inputmode="numeric" pattern="[0-9]*">
+                        <span>분</span>
                         
                     </div>
                     <label for="medication-days">투약 반복</label>
