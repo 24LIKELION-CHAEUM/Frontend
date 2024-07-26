@@ -1,0 +1,114 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+}
+
+#wrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+    width: 100%;
+    overflow: hidden;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 100%;
+}
+
+.topbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-top: 37px;
+    margin-bottom: 24px;
+    font-family: 'body2';
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: -2%;
+}
+
+.back_btn {
+    position: absolute;
+    left: 0%;
+    border: none;
+    background-color: transparent;
+    margin-left: 5%;
+}
+
+.result {
+    justify-content: start;
+    align-items: center;
+    justify-items: center;
+    height: 96px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    padding-left: 16px;
+    background-color: #F6F4FF;
+}
+
+.result2 {
+    justify-content: start;
+    align-items: center;
+    justify-items: center;
+    height: 96px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    padding-left: 16px;
+}
+
+.result_item {
+    display: flex;
+    text-align: start;
+    align-items: center;
+}
+
+.profile_picture {
+    width: 40px;
+    height: 40px;
+    margin-right: 12px;
+}
+
+.profile_info {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    align-items: flex-start;
+}
+
+.profile_name {
+    font-family: 'semibold';
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: -2%;
+    padding-top: 4px;
+    color: #6838FF;
+}
+
+.birth_date, .relation {
+    margin-right: 5px;
+    font-family: 'body2';
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: -2%;
+    color: #7B7B7E;
+}
+
+.profile_name2 {
+    font-family: 'label';
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: -2%;
+    padding-top: 4px;
+    color: #8C8C8E;
+}
