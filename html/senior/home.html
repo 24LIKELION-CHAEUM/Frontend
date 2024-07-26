@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/nav.css">
+    <link rel="stylesheet" href="/css/home.css">
+    <style>
+        @import url(/css/fonts.css);
+    </style>
+</head>
+<body>
+    <div id="wrap">
+        <main id="main-content">
+            <section class="header-section">
+                <button class="logo-button">로고</button>
+                <p class="user-greeting">홍길동님은 건강한 정신을 위해</p>
+                <div class="day-counter">
+                    <span class="day-count" id="day-count">000</span> 일 째 노력 중!
+                </div>
+            </section>
+            <section class="image-section">
+                <div class="image-placeholder"></div>
+            </section>
+            <section class="cards-section">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-text">
+                            <p class="card-description">감정 살피기의 첫걸음</p>
+                            <h3 class="card-title">오늘의 감정</h3>
+                        </div>
+                        <div class="card-icon">
+                            <img src="/assets/arrow_next.svg" class="arrow-icon" alt="" />
+                        </div>
+                    </div>
+                    <div class="card-image-placeholder"></div>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-text">
+                            <p class="card-description">할 일은 튼튼히!</p>
+                            <h3 class="card-title">오늘의 할 일</h3>
+                        </div>
+                        <div class="card-icon">
+                            <img src="/assets/arrow_next.svg" class="arrow-icon" alt="" />
+                        </div>
+                    </div>
+                    <div class="card-image-placeholder"></div>
+                </div>
+            </section>
+            <section class="notifications-section">
+                <div class="notification">
+                    <div class="notification-image-placeholder"></div>
+                    <div class="notification-text">
+                        <p class="notification-description">깜빡 잊지 않도록!</p>
+                        <div class="notification-row">
+                            <h3 class="notification-title">읽지 않은 알림</h3>
+                            <span id="notification-count" class="notification-count">9999</span>
+                        </div>
+                    </div>
+                    <img src="/assets/arrow_next.svg" class="arrow-icon" alt="" />
+                </div>
+            </section>
+        </main>
+
+        <!--modal-->
+        <div id="modal" class="modal">
+            <div class="modal-content">
+                <h2 class="modal-title">'온움'(이)가 사용자의 위치에 접근<br>하는데 동의하시겠습니까?</h2>
+                <p class="modal-description">동의하면 복지시설 정보 등의 혜택을 누릴 수 있어요</p>
+                <div class="modal-buttons">
+                    <button id="cancel-btn" class="modal-btn cancel-btn">취소</button>
+                    <button id="confirm-btn" class="modal-btn confirm-btn">동의하기</button>
+                </div>
+            </div>
+        </div>
+
+        
+        <!--navigation-->
+        <footer class="navbar">
+            <a href="/html/senior/home.html" class="nav-item">
+                <img src="/assets/nav/nav_home_active.svg" alt="홈" class="nav-icon">
+                <span class="nav-text">홈</span>
+            </a>
+            <a href="/html/senior/welfare.html" class="nav-item">
+                <img src="/assets/nav/nav_building_inactive.svg" alt="복지시설" class="nav-icon">
+                <span class="nav-text">복지시설</span>
+            </a>
+            <a href="/html/senior/click.html" class="nav-item">
+                <img src="/assets/nav/nav_finger_inactive.svg" alt="콕찌르기" class="nav-icon">
+                <span class="nav-text">콕찌르기</span>
+            </a>
+            <a href="/html/senior/mypage.html" class="nav-item">
+                <img src="/assets/nav/nav_user_inactive.svg" alt="마이페이지" class="nav-icon">
+                <span class="nav-text">마이페이지</span>
+            </a>
+        </footer>
+    </div>
+    <script src="/js/senior/home.js"></script>
+</body>
+</html>
