@@ -1,11 +1,3 @@
-/* Add this to seniorlogin.css */
-@font-face {
-    font-family: 'Pretendard-Regular';
-    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
-    font-weight: 400;
-    font-style: normal;
-}
-
 * {
     margin: 0;
     padding: 0;
@@ -13,8 +5,6 @@
 }
 
 body {
-    font-family: 'Pretendard-Regular';
-    background-color: #f5f5f5;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -26,7 +16,6 @@ body {
     width: 360px;
     height: 690px;
     background-color: #fff;
-    
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -48,12 +37,12 @@ header {
 }
 
 h3 {
+    font-family: 'body2';
+    font-size: 16px;
     margin-top: 10px;
     flex-grow: 1;
     text-align: center;
     margin-right: 16px;
-    font-weight: 400;
-    font-size: 16px;
     color:#242427;
 }
 
@@ -80,10 +69,12 @@ main {
 }
 
 h2 {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+    margin-top: 20px;
     color: #000000;
     text-align: left;
-    font-weight: bold;
+    font-size: 22px;
+    font-family: 'heading2';
 }
 
 .options {
@@ -95,7 +86,7 @@ h2 {
 .option {
     display: flex;
     align-items: center;
-    padding: 15px;
+    padding: 20px;
     border-width: 0.8px;
     border-radius: 10px;
     border-style: solid;
@@ -109,14 +100,15 @@ h2 {
 }
 
 .option img {
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     margin-right: 10px;
 }
 
 .option h3 {
     text-align: left;
     font-size: 14px;
+    font-family: 'body3';
     margin-left: 5px;
     margin-bottom: 15px;
     color: #242427;
@@ -125,14 +117,14 @@ h2 {
 
 .option p span {
     font-weight: bold;
-    color: #515155;
+    color: #7b7b7e;
 }
 
 .option p {
     margin-left: 5px;
     text-align: left;
     font-size: 10px;
-    color: #7b7b72;
+    color: #7b7b7e;
     margin-top: -10px;
 }
 
@@ -167,11 +159,12 @@ h2 {
 }
 .meal-time-container h2{
     margin-top: 10%;
+    font-family: 'body1';
 }
 
 .meal-time-label {
-    font-weight: bold;
-    color: #000;
+    font-family: 'body3';
+    color: #242427;
     display: flex;
     
 }
@@ -186,10 +179,11 @@ h2 {
 }
 
 .meal-times {
-    color: #8F6CFF;
+    color: #6838ff;
     display: flex;
     background: none;
     padding-top: 10px;
+    font-family: 'body3';
 }
 
 .time-inputs {
@@ -378,13 +372,13 @@ footer {
 }
 
 .complete-button {
-    padding: 10px 20px;
+    padding: 15px 20px;
     margin-bottom: 10px;
     width: 100%;
+    font-family: 'body2';
     font-size: 16px;
-    font-weight: 330;
-    color: #fff;
-    background-color: #7b7b72;
+    color: #ffffff;
+    background-color: #7b7b7e;
     border: none;
     border-radius: 10px;
     cursor: not-allowed;
@@ -401,7 +395,7 @@ footer {
     height: 690px;
     position: fixed;
     bottom: 0;
-    background: #f7f8fa;
+    background: #fafafa;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
@@ -413,7 +407,7 @@ footer {
     width: 100%;
     padding: 10px;
     border-radius: 10px;
-    border:0.8px solid #b2b2b4;
+    border:0.8px solid #AFB8C1;
     margin-top: 10px;
     margin-bottom: 30px;
 }
@@ -423,20 +417,35 @@ footer {
 
 .bottom-sheet-content {
     padding: 10px;
+    font-family: 'body2';
+    font-size: 16px;
     text-align: center;
+    color: #7b7b7e;
+}
+.bottom-sheet-content p{
+    margin-top: 10px;
+    margin-left: -15px;
+    font-family: 'body3';
     font-size: 14px;
-    color: #7b7b72;
+    margin-bottom: 25px;
+
 }
 .bottom-sheet-content h3{
-
-    font-weight: bold;
+    font-family: 'body1';
     color: #000000;
-    margin-top: 10px;
+    margin-top: 30px;
     margin-bottom: 5px;
     font-size: 18px;
+    text-align: center;
 }
 .check-icon{
     display: flex;
+    width: 20px;
+    height: 20px;
+    margin-left: 250px;
+}
+.colored-check-icon {
+    background-image: url('/assets/check_activated.svg'); /* Replace with the correct path to your colored check icon */
     width: 20px;
     height: 20px;
     margin-left: 250px;
@@ -447,6 +456,7 @@ footer {
     border-radius: 10px;
     margin: 10px 5px 10px 5px;
     text-align: left;
+    font-family: 'body2';
     cursor: pointer;
     transition: background-color 0.2s;
     display: flex;

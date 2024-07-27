@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
             completeRegistrationButton.disabled = true;
         }
     }
-
+    
     mealTimeButton.addEventListener('click', () => {
         mainView.classList.add('hidden');
         mealTimeView.classList.remove('hidden');
@@ -129,6 +129,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     mealTypeOptions.forEach(option => {
         option.addEventListener('click', () => {
+            mealTypeOptions.forEach(opt => {
+                const checkIcon = opt.querySelector('.check-icon');
+                if (checkIcon) {
+                    checkIcon.remove();
+                }
+            });
+            const checkIcon = document.createElement('img');
+            checkIcon.src = '/assets/check_activated.svg'; // Use the path to your colored check icon
+            checkIcon.alt = 'check';
+            checkIcon.classList.add('check-icon', 'colored-check-icon');
+            option.appendChild(checkIcon);
+
             mealTypeSelect.value = option.dataset.value;
             setTimeout(() => {
                 bottomSheet.style.transform = 'translateY(100%)';
