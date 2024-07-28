@@ -85,13 +85,14 @@ main {
     background-color: #fff;
     border-radius: 12px;
     box-shadow: 0 0 10px rgba(143, 108, 255, 0.15);
-    padding: 20px 10px;
+    padding: 20px 15px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
 .card-content {
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -122,7 +123,6 @@ main {
 }
 
 .arrow-icon {
-    margin-left: 20px;
     width: 9px;
     height: 13px;
 }
