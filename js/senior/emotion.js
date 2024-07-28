@@ -1,4 +1,9 @@
 document.addEventListener("DOMContentLoaded", function() {
+    // 임의로 초반에는 false 상태가 되도록 저장
+    localStorage.setItem('recordedEmotion', 'false');
+    localStorage.setItem('recordedEmotionComment', 'false');
+    toggleVisibility();
+
     const daysOfWeek = ['월', '화', '수', '목', '금', '토', '일'];
     
     // 현재 날짜 정보 가져오기
@@ -146,6 +151,14 @@ document.addEventListener("DOMContentLoaded", function() {
         emotionButtons.forEach(btn => btn.classList.remove('selected'));
         submitButton.disabled = true;
         errorMessage.classList.add('hidden');
+
+        // 감정 기록 상태를 로컬 스토리지에 저장
+        localStorage.setItem('recordedEmotion', 'true');
+        toggleVisibility();
+
+        const plusButton = document.getElementById('plus-button');
+        plusButton.src = '/assets/add_unactivated.svg';
+        plusButton.style.pointerEvents = 'none'; // 클릭 불가능하게 설정
     });
 
 
@@ -156,13 +169,23 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-    let moodElement = document.querySelectorAll('.mood-reason');
+    let reasonElement = document.querySelectorAll('.comment-reason');
     let commentElement = document.querySelectorAll('.comment-reason');
 
-    moodElement.forEach(function(element) {
+    reasonElement.forEach(function(element) {
         truncateText(element, 19);
     });
     commentElement.forEach(function(element) {
         truncateText(element, 30);
     });
+
+    function toggleVisibility() {
+        const isRecorded = localStorage.getItem('recordedEmotion') === 'true';
+        const isCommented = localStorage.getItem('recordedEmotionComment') === 'true';
+
+        document.querySelector('.mood-list').style.display = isRecorded ? 'block' : 'none';
+        document.querySelector('.mood-list2').style.display = isRecorded ? 'none' : 'block';
+        document.querySelector('.comment-list').style.display = isCommented ? 'block' : 'none';
+        document.querySelector('.comment-list2').style.display = isCommented ? 'none' : 'block';
+    }
 });
