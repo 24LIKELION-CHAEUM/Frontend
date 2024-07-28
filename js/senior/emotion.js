@@ -39,16 +39,112 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById('full-date').textContent = fullDate;
     document.getElementById('day-of-week').textContent = `${dayOfWeek}요일`;
 
-
-
-
-
-
-
-
+    const plusButton = document.getElementById('plus-button');
     const modalBackdrop = document.querySelector('.modal-backdrop');
-    document.getElementById('modal').classList.add('show');
-    modalBackdrop.classList.add('show');
+    const submitButton = document.getElementById('submit-button');
+    const recordedEmotionStatus = document.getElementById('recorded-emotion-status');
+    const errorMessage = document.getElementById('error-message');
+
+    plusButton.addEventListener('click', function() {
+        document.getElementById('modal').classList.add('show');
+        modalBackdrop.classList.add('show');
+    });
+
+    // 모달 내의 취소 버튼을 눌렀을 때 모달을 숨기기
+    document.querySelector('.close').addEventListener('click', function() {
+        document.getElementById('modal').classList.remove('show');
+        modalBackdrop.classList.remove('show');
+    });
+
+    const emotionButtons = document.querySelectorAll('.emotion-btn');
+    let selectedEmotion = null;
+    let selectedEmoji = null;
+
+    emotionButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            emotionButtons.forEach(btn => btn.classList.remove('selected'));
+            button.classList.add('selected');
+            selectedEmotion = button.innerText.trim();
+            selectedEmoji = button.querySelector('.emotion-emoji').textContent.trim();
+            validateForm();
+        });
+    });
+
+    const hourInput = document.getElementById('hour');
+    const minuteInput = document.getElementById('minute');
+    const reasonInput = document.getElementById('reason');
+
+    [hourInput, minuteInput].forEach(input => {
+        input.addEventListener('blur', function(event) {
+            if (event.target.value.length === 1) {
+                event.target.value = '0' + event.target.value;
+            }
+            validateForm();
+        });
+    });
+
+    [hourInput, minuteInput, reasonInput].forEach(input => {
+        input.addEventListener('input', validateForm);
+    });
 
 
+    function validateTime(hour, minute) {
+        const hourNum = parseInt(hour, 10);
+        const minuteNum = parseInt(minute, 10);
+        if (isNaN(hourNum) || isNaN(minuteNum)) {
+            return false;
+        }
+        return hourNum >= 0 && hourNum < 24 && minuteNum >= 0 && minuteNum < 60;
+    }
+
+    function convertTo12HourFormat(hour, minute) {
+        const hourNum = parseInt(hour, 10);
+        const minuteNum = parseInt(minute, 10);
+        const period = hourNum < 12 ? '오전' : '오후';
+        const hour12 = hourNum % 12 || 12; // 0 should be converted to 12
+        return `${period} ${hour12}:${minuteNum < 10 ? '0' + minuteNum : minuteNum}`;
+    }
+    
+    function validateForm() {
+        const hour = hourInput.value.trim();
+        const minute = minuteInput.value.trim();
+        const reason = reasonInput.value.trim();
+
+        const isTimeValid = validateTime(hour, minute);
+
+        if (selectedEmotion && hour && minute && reason && isTimeValid) {
+            submitButton.disabled = false;
+            errorMessage.classList.add('hidden');
+        } else {
+            submitButton.disabled = true;
+            if (!isTimeValid) {
+                errorMessage.classList.remove('hidden');
+                errorMessage.textContent = '시간 입력을 확인해주세요';
+            } else {
+                errorMessage.classList.add('hidden');
+            }
+        }
+    }
+
+    submitButton.addEventListener('click', function() {
+        // 기록된 감정 상태 업데이트
+        recordedEmotionStatus.textContent = selectedEmotion.replace(/[^\uAC00-\uD7A3]/g, '');
+
+        // .mood-item 요소 업데이트
+        const moodItem = document.querySelector('.mood-item');
+        moodItem.querySelector('.emoji').textContent = selectedEmoji;
+        moodItem.querySelector('.mood-title').textContent = selectedEmotion.replace(/[^\uAC00-\uD7A3]/g, '');
+        moodItem.querySelector('.mood-time').textContent = convertTo12HourFormat(hourInput.value, minuteInput.value);
+        moodItem.querySelector('.mood-reason').textContent = reasonInput.value;
+
+        // 모달 초기화
+        selectedEmotion = null;
+        selectedEmoji = null;
+        hourInput.value = '';
+        minuteInput.value = '';
+        reasonInput.value = '';
+        emotionButtons.forEach(btn => btn.classList.remove('selected'));
+        submitButton.disabled = true;
+        errorMessage.classList.add('hidden');
+    });
 });

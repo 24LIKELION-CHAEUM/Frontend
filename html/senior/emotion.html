@@ -68,14 +68,47 @@
                                 <span class="close" onclick="closeModal()">취소</span>
                                 <div class="modal-title">오늘의 감정 기록하기</div>
                             </div>
+                            <div class="recorded-emotion">
+                                <div class="span1">😊 기록된 오늘의 감정</div>
+                                <div class="span2" id="recorded-emotion-status">없음</div>
+                            </div>
+                            <div class="record-info">오늘의 감정은 하루에 한 개 기록할 수 있어요</div>
                             <div class="form-group">
-                                <label for="name">감정을 느낀 이유</label>
-                                <input type="text" id="name" placeholder="감정을 느낀 이유를 작성해주세요">
+                                <label for="emotion" class="emotion-title">감정</label>
+                                <div class="emotions">
+                                    <button class="emotion-btn">
+                                        <div class="emotion-emoji">
+                                            😊 
+                                        </div>
+                                        행복</button>
+                                    <button class="emotion-btn"><div class="emotion-emoji">
+                                        😐 
+                                    </div>평범</button>
+                                    <button class="emotion-btn"><div class="emotion-emoji">
+                                        😢 
+                                    </div>슬픔</button>
+                                    <button class="emotion-btn"><div class="emotion-emoji">
+                                        😠 
+                                    </div>분노</button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="hour" class="hour">감정을 느낀 시간</label>
+                                <div class="time-inputs">
+                                    <input type="text" id="hour" maxlength="2" placeholder="00" class="time-input" inputmode="numeric" pattern="[0-9]*"> 
+                                    <div>시</div>
+                                    <input type="text" id="minute" maxlength="2" placeholder="00" class="time-input" inputmode="numeric" pattern="[0-9]*"> 
+                                    <div>분</div>
+                                </div>
+                                <div id="error-message" class="error-message hidden">입력하신 내용을 다시 확인해주세요</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="reason">감정을 느낀 이유</label>
+                                <input type="text" id="reason" placeholder="감정을 느낀 이유를 작성해주세요">
                             </div>
                             <button id="submit-button" class="submit-button" disabled>기록</button>
                         </div>
                     </div>
-    </div>
     <script src="/js/senior/emotion.js"></script>
 </body>
 </html>
