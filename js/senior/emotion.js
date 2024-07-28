@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const hourNum = parseInt(hour, 10);
         const minuteNum = parseInt(minute, 10);
         const period = hourNum < 12 ? '오전' : '오후';
-        const hour12 = hourNum % 12 || 12; // 0 should be converted to 12
+        const hour12 = hourNum % 12 || 12; 
         return `${period} ${hour12}:${minuteNum < 10 ? '0' + minuteNum : minuteNum}`;
     }
     
@@ -146,5 +146,23 @@ document.addEventListener("DOMContentLoaded", function() {
         emotionButtons.forEach(btn => btn.classList.remove('selected'));
         submitButton.disabled = true;
         errorMessage.classList.add('hidden');
+    });
+
+
+    function truncateText(element, maxLength) {
+        let text = element.textContent;
+        if (text.length > maxLength) {
+            element.textContent = text.slice(0, maxLength) + '...';
+        }
+    }
+
+    let moodElement = document.querySelectorAll('.mood-reason');
+    let commentElement = document.querySelectorAll('.comment-reason');
+
+    moodElement.forEach(function(element) {
+        truncateText(element, 19);
+    });
+    commentElement.forEach(function(element) {
+        truncateText(element, 30);
     });
 });

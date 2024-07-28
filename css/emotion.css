@@ -174,6 +174,8 @@ main {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative; 
+    width: 100%;
 }
 
 .mood-title {
@@ -181,7 +183,6 @@ main {
     font-size: 16px;
     line-height: 20px;
     letter-spacing: -2%;
-    margin-right: 10px;
 }
 
 .mood-time,.comment-time {
@@ -199,7 +200,8 @@ main {
     line-height: 16px;
     letter-spacing: -2%;
     color: #7B7B7E;
-    width: 75%;
+    width: 250px;
+    word-wrap: break-word;
 }
 
 .comment-title {
@@ -218,7 +220,8 @@ main {
     line-height: 18px;
     letter-spacing: -2%;
     color: #242427;
-    width: 75%;
+    width: 194px;
+    word-wrap: break-word;
 }
 
 .modal-backdrop {
