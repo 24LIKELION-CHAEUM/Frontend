@@ -2,8 +2,6 @@ body {
     display: flex;
     justify-content: center;
     margin: 0;
-    padding-left: 5%;
-    padding-right: 5%;
     background-image: url('/assets/background.png');
     background-size: 100%; 
     background-position: top center; 
@@ -15,6 +13,8 @@ body {
     width: 100%;
     margin-bottom: 68px; /* 네비게이션 바의 높이만큼 여백 추가 */
     overflow: auto;
+    padding-left: 5%;
+    padding-right: 5%;
 }
 
 main {
@@ -80,12 +80,12 @@ main {
 }
 
 .card {
-    width: 40%;
+    width: 45%;
     height: 40%;
     background-color: #fff;
     border-radius: 12px;
     box-shadow: 0 0 10px rgba(143, 108, 255, 0.15);
-    padding: 15px;
+    padding: 20px 10px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -95,11 +95,9 @@ main {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    text-align: start;
 }
 
-.card-text {
-    flex-grow: 1;
-}
 
 .card-description {
     font-family: 'label';    
@@ -124,6 +122,7 @@ main {
 }
 
 .arrow-icon {
+    margin-left: 20px;
     width: 9px;
     height: 13px;
 }
