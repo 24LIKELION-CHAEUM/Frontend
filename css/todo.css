@@ -134,6 +134,7 @@ main {
     padding: 12px 20px;
     background-color: #FAF8FD;
     border-radius: 12px;
+    height: 80px;
 }
 
 .task-icon {
