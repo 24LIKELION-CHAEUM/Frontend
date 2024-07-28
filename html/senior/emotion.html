@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/emotion.css">
+    <style>
+        @import url(/css/fonts.css);
+    </style>
+</head>
+<body>
+    <div id="wrap">
+        <main>
+            <div class="topbar">
+                <button type="button" class="back_btn" onclick="window.history.back()">
+                    <img src="/assets/arrow_back.svg" alt="뒤로가기">
+                </button>           
+                <span class="comment_login">오늘의 감정</span> 
+            </div>
+            <div class="calendar">
+                <div class="week" id="week-calendar">
+                    <!-- JavaScript에서 여기에 날짜를 채웁니다 -->
+                </div>
+            </div>
+
+            <div class="details">
+                <div class="date-info">
+                    <div class="full-date" id="full-date"></div>
+                    <div class="day-of-week-container">
+                        <div class="day-of-week" id="day-of-week"></div>
+                        <img src="/assets/add_activated.svg" alt="add" class="plus-button" id="plus-button"/>
+                    </div>
+                </div>                
+
+                <div class="mood-list">
+                    <div class="mood-item">
+                        <div class="emoji">😢</div>
+                        <div class="mood-details">
+                            <div class="mood-title-time">
+                                <div class="mood-title">슬픔</div>
+                                <div class="mood-time">오전 11:00</div>
+                            </div>
+                            <div class="mood-reason">이유 (공백 포함 19byte, 넘어가면 ...으로 보여짐)</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="comment-list">
+                    <div class="comment-item">
+                        <div class="comment-emoji"></div>
+                        <div class="comment-details">
+                            <div class="comment-title-time">
+                                <div class="comment-title">김철수</div>
+                                <div class="comment-time">오전 11:00</div>
+                            </div>
+                            <div class="comment-reason">한마디 (공백 포함 30bytes, 넘어가면 ...으로 보여짐)</div>
+                        </div>
+                    </div>
+                </div>
+                
+
+            </div>
+        </main>
+                    <!--modal-->
+                    <div class="modal-backdrop"></div>
+                    <div id="modal" class="modal">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <span class="close" onclick="closeModal()">취소</span>
+                                <div class="modal-title">오늘의 감정 기록하기</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="name">감정을 느낀 이유</label>
+                                <input type="text" id="name" placeholder="감정을 느낀 이유를 작성해주세요">
+                            </div>
+                            <button id="submit-button" class="submit-button" disabled>기록</button>
+                        </div>
+                    </div>
+    </div>
+    <script src="/js/senior/emotion.js"></script>
+</body>
+</html>
