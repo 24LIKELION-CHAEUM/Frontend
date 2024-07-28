@@ -131,6 +131,11 @@ main {
     padding: 12px 17px;
 }
 
+.comment-list2{
+    background-color: #F6F4FF;
+    border-radius: 12px;
+}
+
 .comment-list{
     background-color: #F6F4FF;
     border-radius: 12px;
