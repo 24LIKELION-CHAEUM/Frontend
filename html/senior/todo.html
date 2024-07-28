@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/todo.css">
+    <style>
+        @import url(/css/fonts.css);
+    </style>
+</head>
+<body>
+    <div id="wrap">
+        <main>
+            <div class="topbar">
+                <button type="button" class="back_btn" onclick="window.history.back()">
+                    <img src="/assets/arrow_back.svg" alt="뒤로가기">
+                </button>
+                <span class="comment_login">오늘의 할 일</span>
+            </div>
+            <div class="calendar">
+                <div class="week" id="week-calendar"></div>
+            </div>
+            <div class="details">
+                <div class="date-info">
+                    <div class="full-date" id="full-date"></div>
+                    <div class="day-of-week-container">
+                        <div class="day-of-week" id="day-of-week"></div>
+                        <img src="/assets/add_activated.svg" alt="add" class="plus-button" id="plus-button"/>
+                    </div>
+                </div>
+            </div>
+            <div class="tasks">
+                <div class="task">
+                    <div class="task-icon">🍚</div>
+                    <div class="task-info">
+                        <div class="task-title">아침식사</div>
+                        <div class="task-time">오전 10:00</div>
+                    </div>
+                    <div class="task-status">
+                        <img src="/assets/check_activated.svg" alt="체크">
+                    </div>
+                </div>
+            </div>
+        </main>
+        <!-- modal -->
+        <div class="modal-backdrop"></div>
+        <div id="modal1" class="modal1">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="close" onclick="closeModal()">취소</span>
+                    <div class="modal-title">추가할 일 선택하기</div>
+                </div>
+                <div class="option">
+                    <div class="option-icon">💊</div>
+                    <div class="option-info">
+                        <div class="option-title">투약할 약 추가하기</div>
+                        <div class="option-time">최대 3개까지 등록할 수 있어요</div>
+                    </div>
+                    <div class="next1">
+                        <img src="/assets/arrow_next.svg" alt="next">
+                    </div>
+                </div>
+                <div class="option">
+                    <div class="option-icon">✅</div>
+                    <div class="option-info">
+                        <div class="option-title">다른 할 일 추가하기</div>
+                        <div class="option-time">전화, 산책 등과 같이 다양한 할 일을 등록할 수 있어요</div>
+                    </div>
+                    <div class="next2">
+                        <img src="/assets/arrow_next.svg" alt="next">
+                    </div>
+                </div>
+                <button id="submit-button" class="submit-button" disabled>다음</button>
+            </div>
+        </div>        
+    </div>
+    <script src="/js/senior/todo.js"></script>
+</body>
+</html>
