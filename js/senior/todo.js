@@ -9,6 +9,9 @@ document.addEventListener("DOMContentLoaded", function() {
         day: 'numeric',
     });
     const dayOfWeek = daysOfWeek[(currentDay + 6) % 7]; 
+    const tasks = document.querySelectorAll('.task');
+    const options = document.querySelectorAll('.option');
+    const submitButton = document.getElementById('submit-button');
 
     const weekCalendar = document.getElementById('week-calendar');
     const plusButton = document.getElementById('plus-button');
@@ -16,8 +19,6 @@ document.addEventListener("DOMContentLoaded", function() {
     const modal1 = document.getElementById('modal1');
     const modal2 = document.getElementById('modal2');
     const modal3 = document.getElementById('modal3');
-    const next1Button = document.getElementById('next1');
-    const next2Button = document.getElementById('next2');
     const hourInput = document.getElementById('hour');
     const minuteInput = document.getElementById('minute');
     const submitButton3 = document.getElementById('submit-button3');
@@ -33,6 +34,8 @@ document.addEventListener("DOMContentLoaded", function() {
     const submitButton2 = document.getElementById('submit-button2');
     const taskNameInput2 = document.getElementById('reason2');
     const taskDays = document.querySelectorAll('.emotion-btn2');
+
+    let selectedOption = null; // 현재 선택된 옵션 저장 변수
 
     // 현재 날짜 정보와 주간 날짜 생성
     function calculateWeekDates() {
@@ -60,6 +63,33 @@ document.addEventListener("DOMContentLoaded", function() {
                 <span class="day-date">${date}</span>
             </div>
         `).join('');
+    }
+
+    tasks.forEach(task => {
+        const checkButton = task.querySelector('.task-status img');
+        checkButton.addEventListener('click', () => {
+            task.classList.toggle('completed');
+        });
+    });
+
+    options.forEach(option => {
+        option.addEventListener('click', function() {
+            // 모든 옵션에서 'selected' 클래스 제거
+            options.forEach(opt => opt.classList.remove('selected'));
+            // 클릭한 옵션에 'selected' 클래스 추가
+            this.classList.add('selected');
+            // 선택된 옵션 저장
+            selectedOption = this;
+            // '다음' 버튼 활성화
+            submitButton.disabled = false;
+        });
+    });
+
+    // 옵션 해제 및 '다음' 버튼 비활성화
+    function resetOptionAndButton() {
+        options.forEach(option => option.classList.remove('selected'));
+        selectedOption = null;
+        submitButton.disabled = true;
     }
 
     // 시간 유효성 검사
@@ -157,6 +187,23 @@ document.addEventListener("DOMContentLoaded", function() {
         modal2.classList.remove('show');
         modal3.classList.remove('show');
         modalBackdrop.classList.remove('show');
+        resetOptionAndButton(); // 모달 닫을 때 선택된 옵션과 버튼 상태 초기화
+    }
+
+    // 옵션 선택 후 '다음' 버튼 클릭 시 페이지 이동
+    function handleSubmit() {
+        if (!submitButton.disabled && selectedOption) {
+            const optionText = selectedOption.querySelector('.option-title').textContent;
+
+            if (optionText === "투약할 약 추가하기") {
+                openModal(modal3);
+            } else if (optionText === "다른 할 일 추가하기") {
+                openModal(modal2);
+            }
+
+            // 모달 닫을 때 선택된 옵션과 버튼 상태 초기화
+            resetOptionAndButton();
+        }
     }
 
     // 이벤트 리스너 등록
@@ -167,8 +214,7 @@ document.addEventListener("DOMContentLoaded", function() {
         button.addEventListener('click', closeModal);
     });
 
-    next1Button.addEventListener('click', () => openModal(modal3));
-    next2Button.addEventListener('click', () => openModal(modal2));
+    submitButton.addEventListener('click', handleSubmit);
 
     [medicationNameInput, hourInput, minuteInput].forEach(input => {
         input.addEventListener('input', validateMedicationForm);
@@ -207,7 +253,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
     submitButton2.addEventListener('click', () => {
         if (!submitButton2.disabled) {
-
             // 입력 필드 초기화
             taskNameInput2.value = '';
             hourInput2.value = '';
