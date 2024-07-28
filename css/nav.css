@@ -19,6 +19,7 @@ footer {
     border-top-right-radius: 20px;
     border-bottom-left-radius: 0; 
     border-bottom-right-radius: 0; 
+    box-shadow: 0 0 5px rgba(216, 215, 222, 0.5);
 }
 
 .nav-item {
