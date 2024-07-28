@@ -4,30 +4,100 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/nav.css">
+    <link rel="stylesheet" href="/css/click.css">
+    <style>
+        @import url(/css/fonts.css);
+    </style>
 </head>
 <body>
     <div id="wrap">
         <main id="main-content">
-            <p>콕찌르기</p>
+            <span class="page-title">콕찌르기</span> 
+
+            <div class="search-input">
+                <input class="input-field" id="search-input" placeholder="콕 찌를 사람을 검색해보세요"/>
+                <img src="/assets/search.svg" id="search-button" class="search-button" alt="검색" />
+                <img src="/assets/x.svg" id="clear-button" class="clear-button" style="display: none;" alt="초기화" />
+            </div>
+            
+            <div class="dropdown-menu" id="dropdown-menu" style="display: none;">
+                <div class="dropdown-item">
+                    <div class="profile-picture"></div>
+                    <div class="profile-info">
+                        <div class="profile-name">김철수</div>
+                    </div>
+                    <div class="dropdown-checkmark">
+                        <img src="/assets/click.svg" alt="선택됨" />
+                        <div class="checkmark-label">콕찌르기</div>
+                    </div>
+                </div>
+                <div class="dropdown-item">
+                    <div class="profile-picture"></div>
+                    <div class="profile-info">
+                        <div class="profile-name">김철수</div>
+                    </div>
+                    <div class="dropdown-checkmark">
+                        <img src="/assets/click.svg" alt="선택됨" />
+                        <div class="checkmark-label">콕찌르기</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="result-list">
+                <div class="result-item">
+                    <div class="profile-picture"></div>
+                    <div class="profile-info">
+                        <div class="profile-details">
+                            <span class="role">보호자</span>
+                            <span class="timestamp"> | 01시 56분</span>
+                        </div>
+                        <div class="profile-name">김철수</div>
+                        <div class="profile-status">100번 째 콕 찌르는 중이에요!</div>
+                    </div>
+                    <div class="profile-checkmark">
+                        <img src="/assets/click.svg" alt="선택됨" />
+                        <div class="checkmark-label">나도 콕찌르기</div>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="result-list">
+                <div class="result-item">
+                    <div class="profile-picture"></div>
+                    <div class="profile-info">
+                        <div class="profile-details">
+                            <span class="role">보호자</span>
+                            <span class="timestamp"> | 01시 56분</span>
+                        </div>
+                        <div class="profile-name">123456789012</div>
+                        <div class="profile-status">100번 째 콕 찌르는 중이에요!</div>
+                    </div>
+                    <div class="profile-checkmark">
+                        <img src="/assets/click.svg" alt="선택됨" />
+                        <div class="checkmark-label">나도 콕찌르기</div>
+                    </div>
+                </div>
+            </div>
         </main>
-        <footer class="navbar">
-            <a href="/html/parent/home.html" class="nav-item">
-                <img src="/assets/nav/nav_home_inactive.svg" alt="홈" class="nav-icon">
-                <span class="nav-text">홈</span>
-            </a>
-            <a href="/html/parent/welfare.html" class="nav-item">
-                <img src="/assets/nav/nav_building_inactive.svg" alt="시니어" class="nav-icon">
-                <span class="nav-text">시니어</span>
-            </a>
-            <a href="/html/parent/click.html" class="nav-item">
-                <img src="/assets/nav/nav_finger_active.svg" alt="콕찌르기" class="nav-icon">
-                <span class="nav-text">콕찌르기</span>
-            </a>
-            <a href="/html/parent/mypage.html" class="nav-item">
-                <img src="/assets/nav/nav_user_inactive.svg" alt="마이페이지" class="nav-icon">
-                <span class="nav-text">마이페이지</span>
-            </a>
-        </footer>
+    <footer class="navbar">
+        <a href="/html/parent/home.html" class="nav-item">
+            <img src="/assets/nav/nav_home_inactive.svg" alt="홈" class="nav-icon">
+            <span class="nav-text">홈</span>
+        </a>
+        <a href="/html/parent/welfare.html" class="nav-item">
+            <img src="/assets/nav/nav_building_inactive.svg" alt="시니어" class="nav-icon">
+            <span class="nav-text">시니어</span>
+        </a>
+        <a href="/html/parent/click.html" class="nav-item">
+            <img src="/assets/nav/nav_finger_active.svg" alt="콕찌르기" class="nav-icon">
+            <span class="nav-text">콕찌르기</span>
+        </a>
+        <a href="/html/parent/mypage.html" class="nav-item">
+            <img src="/assets/nav/nav_user_inactive.svg" alt="마이페이지" class="nav-icon">
+            <span class="nav-text">마이페이지</span>
+        </a>
+    </footer>
     </div>
+    <script src="/js/parent/click.js"></script>
 </body>
 </html>
