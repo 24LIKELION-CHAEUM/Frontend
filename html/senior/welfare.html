@@ -4,13 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/nav.css"> 
+    <link rel="stylesheet" href="/css/senior/welfare.css"> 
+</head>
 </head>
 <body>
-    <div id="wrap">
-        <main id="main-content">
-            <p>복지시설</p>
-        </main>
-        <footer class="navbar">
+    <div id="map"></div>
+    <div class="search-bar">
+        <input type="text" id="search-box" placeholder="복지시설을 검색해보세요">
+    </div>
+    <div id="bottom-sheet" class="bottom-sheet">
+        <div class="bottom-sheet-header">
+            <span id="close-bottom-sheet">&times;</span>
+        </div>
+        <div id="facilities-list" class="facilities-list"></div>
+    </div>
+    <footer class="navbar">
             <a href="/html/senior/home.html" class="nav-item">
                 <img src="/assets/nav/nav_home_inactive.svg" alt="홈" class="nav-icon">
                 <span class="nav-text">홈</span>
@@ -27,7 +35,8 @@
                 <img src="/assets/nav/nav_user_inactive.svg" alt="마이페이지" class="nav-icon">
                 <span class="nav-text">마이페이지</span>
             </a>
-        </footer>
-    </div>
+    </footer>    
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJMMaxjoQezEf1BlD2NCyPVVC4tUeSxg4&callback=initMap" async defer></script>
+    <script src="/js/senior/welfare.js"></script>
 </body>
 </html>

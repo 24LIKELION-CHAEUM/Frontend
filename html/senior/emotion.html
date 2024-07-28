@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/emotion.css">
+    <style>
+        @import url(/css/fonts.css);
+    </style>
+</head>
+<body>
+    <div id="wrap">
+        <main>
+            <div class="topbar">
+                <button type="button" class="back_btn" onclick="window.history.back()">
+                    <img src="/assets/arrow_back.svg" alt="뒤로가기">
+                </button>           
+                <span class="comment_login">오늘의 감정</span> 
+            </div>
+            <div class="calendar">
+                <div class="week" id="week-calendar">
+                </div>
+            </div>
+
+            <div class="details">
+                <div class="date-info">
+                    <div class="full-date" id="full-date"></div>
+                    <div class="day-of-week-container">
+                        <div class="day-of-week" id="day-of-week"></div>
+                        <img src="/assets/add_activated.svg" alt="add" class="plus-button" id="plus-button"/>
+                    </div>
+                </div>                
+
+
+                <div class="mood-list2">
+                    <div class="mood-item2">
+                        <div class="emoji2">🫥</div>
+                        <div class="mood-details2">
+                            <div class="mood-title-time2">
+                                <div class="mood-title2">아직 기록된 감정이 없어요</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mood-list">
+                    <div class="mood-item">
+                        <div class="emoji"></div>
+                        <div class="mood-details">
+                            <div class="mood-title-time">
+                                <div class="mood-title"></div>
+                                <div class="mood-time"></div>
+                            </div>
+                            <div class="mood-reason"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="comment-list2">
+                    <div class="comment-item2">
+                        <div class="comment-emoji2"></div>
+                        <div class="comment-details2">
+                            <div class="comment-title-time2">
+                                <div class="comment-title2">김철수</div>
+                            </div>
+                            <div class="comment-reason2">아직 한마디를 남기지 않았어요</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="comment-list">
+                    <div class="comment-item">
+                        <div class="comment-emoji"></div>
+                        <div class="comment-details">
+                            <div class="comment-title-time">
+                                <div class="comment-title"></div>
+                                <div class="comment-time"></div>
+                            </div>
+                            <div class="comment-reason"></div>
+                        </div>
+                    </div>
+                </div>
+                
+
+            </div>
+        </main>
+                    <!--modal-->
+                    <div class="modal-backdrop"></div>
+                    <div id="modal" class="modal">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <span class="close" onclick="closeModal()">취소</span>
+                                <div class="modal-title">오늘의 감정 기록하기</div>
+                            </div>
+                            <div class="recorded-emotion">
+                                <div class="span1">😊 기록된 오늘의 감정</div>
+                                <div class="span2" id="recorded-emotion-status">없음</div>
+                            </div>
+                            <div class="record-info">오늘의 감정은 하루에 한 개 기록할 수 있어요</div>
+                            <div class="form-group">
+                                <label for="emotion" class="emotion-title">감정</label>
+                                <div class="emotions">
+                                    <button class="emotion-btn">
+                                        <div class="emotion-emoji">
+                                            😊 
+                                        </div>
+                                        행복</button>
+                                    <button class="emotion-btn"><div class="emotion-emoji">
+                                        😐 
+                                    </div>평범</button>
+                                    <button class="emotion-btn"><div class="emotion-emoji">
+                                        😢 
+                                    </div>슬픔</button>
+                                    <button class="emotion-btn"><div class="emotion-emoji">
+                                        😠 
+                                    </div>분노</button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="hour" class="hour">감정을 느낀 시간</label>
+                                <div class="time-inputs">
+                                    <input type="text" id="hour" maxlength="2" placeholder="00" class="time-input" inputmode="numeric" pattern="[0-9]*"> 
+                                    <div>시</div>
+                                    <input type="text" id="minute" maxlength="2" placeholder="00" class="time-input" inputmode="numeric" pattern="[0-9]*"> 
+                                    <div>분</div>
+                                </div>
+                                <div id="error-message" class="error-message hidden">입력하신 내용을 다시 확인해주세요</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="reason">감정을 느낀 이유</label>
+                                <input type="text" id="reason" placeholder="감정을 느낀 이유를 작성해주세요">
+                            </div>
+                            <button id="submit-button" class="submit-button" disabled>기록</button>
+                        </div>
+                    </div>
+    <script src="/js/senior/emotion.js"></script>
+</body>
+</html>
