@@ -1,45 +1,53 @@
-const inputName = document.getElementById('input_name');
-const inputDob = document.getElementById('input_dob');
-const dobError = document.getElementById('dob_error');
-const signinBtn = document.getElementById('signin_btn');
+document.addEventListener('DOMContentLoaded', function() {
+    const inputName = document.getElementById('input_name');
+    const inputDob = document.getElementById('input_dob');
+    const dobError = document.getElementById('dob_error');
+    const signinBtn = document.getElementById('signin_btn');
 
-function checkInputs() {
-    const nameValue = inputName.value.trim();
-    const dobValue = inputDob.value.trim();
+    // 초기 설정: 에러 메시지를 숨김
+    dobError.style.display = 'none';
 
-    // 이름 확인
-    const isNameValid = nameValue.length > 0;
+    function checkInputs() {
+        const nameValue = inputName.value.trim();
+        const dobValue = inputDob.value.trim();
 
-    // 생년월일 확인
-    const isDobValid = dobValue.length === 8 && /^\d{8}$/.test(dobValue);
+        // 이름 확인
+        const isNameValid = nameValue.length > 0;
 
-    // 이름 비어있지 않고, 생년월일 유효 -> 버튼 활성화
-    if (isNameValid && isDobValid) {
-        signinBtn.disabled = false;
-        inputDob.classList.remove('error');
-        dobError.style.display = 'none';
-    } else {
-        signinBtn.disabled = true;
-        if (!isDobValid && dobValue.length > 0) {
-            inputDob.classList.add('error');
-            dobError.style.display = 'block';
-        } else {
+        // 생년월일 확인
+        const isDobValid = dobValue.length === 8 && /^\d{8}$/.test(dobValue);
+
+        // 이름 비어있지 않고, 생년월일 유효 -> 버튼 활성화
+        if (isNameValid && isDobValid) {
+            signinBtn.disabled = false;
             inputDob.classList.remove('error');
             dobError.style.display = 'none';
+        } else {
+            signinBtn.disabled = true;
+            if (!isDobValid && dobValue.length > 0) {
+                inputDob.classList.add('error');
+                dobError.style.display = 'block';
+            } else {
+                inputDob.classList.remove('error');
+                dobError.style.display = 'none';
+            }
         }
     }
-}
 
-inputName.addEventListener('input', checkInputs);
-inputDob.addEventListener('input', checkInputs);
+    inputName.addEventListener('input', checkInputs);
+    inputDob.addEventListener('input', checkInputs);
 
-window.addEventListener('load', checkInputs);
+    window.addEventListener('load', checkInputs);
 
-signinBtn.addEventListener('click', function(event) {
-    const signupType = localStorage.getItem('signupType');
-    if (signupType === '보호자') {
-        window.location.href = '/html/signup/signup_parent.html';
-    } else if (signupType === '시니어') {
-        window.location.href = '/html/signup/signup_senior.html';
-    }
+    signinBtn.addEventListener('click', function(event) {
+        const signupType = localStorage.getItem('signupType');
+        if (signupType === '보호자') {
+            window.location.href = '/html/signup/signup_parent.html';
+        } else if (signupType === '시니어') {
+            window.location.href = '/html/signup/signup_senior.html';
+        }
+    });
+
+    // 초기 체크
+    checkInputs();
 });
