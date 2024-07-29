@@ -31,4 +31,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // 등록 상태가 변경될 때마다 체크
     window.addEventListener('storage', checkRegistrationCompletion);
+
+    signinButton.addEventListener('click', function(event) {
+        // 페이지 이동 전에 localStorage 초기화
+        localStorage.setItem('allMealsRegistered', 'false');
+        localStorage.setItem('medicationRegistered', 'false');
+    });
 });
