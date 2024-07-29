@@ -4,11 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/nav.css"> 
+    <link rel="stylesheet" href="/css/parent/wellfare.css"> 
+    <style>
+        @import url(/css/fonts.css);
+    </style>
 </head>
 <body>
     <div id="wrap">
         <main id="main-content">
-            <p>복지시설</p>
+            <div class="container">
+                <div class="header">
+                    <h2>시니어</h2>
+                    <div class="user-info">
+                        <div class="user-image"></div>
+                        <div>
+                            <div id="user-name">홍길동 <span id="user-relation">관계</span></div>
+                            <div id="user-birthdate">1945.06.21</div>
+                        </div>
+                    </div>
+                </div>
+                <h2>길동님의 오늘의 할 일</h2>
+                <div class="section" id="task-list">
+                    <!-- 할 일 목록이 여기에 추가됩니다. -->
+                </div>
+                <h2>길동님의 오늘의 감정</h2>
+                <div class="section" id="emotion-section">
+                    <!-- 감정 정보가 여기에 추가됩니다. -->
+                </div>
+            </div>
         </main>
         <footer class="navbar">
             <a href="/html/parent/home.html" class="nav-item">
@@ -29,5 +52,21 @@
             </a>
         </footer>
     </div>
+
+    <div id="overlay" class="overlay"></div>
+    <div id="bottom-sheet" class="bottom-sheet">
+        <div class="bottom-sheet-content">
+            <div class="sheet-header">
+                <span id="close-sheet" class="sheet-cancel">취소</span>
+                <span class="sheet-title">한마디 남기기</span>
+            </div>
+            <div class="sheet-body">
+                <label for="comment">한마디</label>
+                <textarea id="comment" placeholder="길동님께 한마디를 남겨주세요"></textarea>
+            </div>
+            <button class="sheet-submit">남기기</button>
+        </div>
+    </div>
+    <script src="/js/parent/welfare.js"></script>
 </body>
 </html>
