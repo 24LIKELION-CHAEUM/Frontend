@@ -34,3 +34,12 @@ inputName.addEventListener('input', checkInputs);
 inputDob.addEventListener('input', checkInputs);
 
 window.addEventListener('load', checkInputs);
+
+signinBtn.addEventListener('click', function(event) {
+    const signupType = localStorage.getItem('signupType');
+    if (signupType === '보호자') {
+        window.location.href = '/html/signup/signup_parent.html';
+    } else if (signupType === '시니어') {
+        window.location.href = '/html/signup/signup_senior.html';
+    }
+});
