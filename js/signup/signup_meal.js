@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const reasonElement = document.getElementById('reason'); // 선택된 식사 시간 구분을 표시할 요소
     const submitButton = document.getElementById('submit-button2'); // 등록 버튼
     const recordedEmotionStatus = document.getElementById('recorded-emotion-status'); // 선택한 식사 시간 구분 표시 요소
+    const span1 = document.querySelector('.span1'); // 문구를 변경할 요소
 
     // 선택된 식사 시간 구분을 저장할 변수
     let selectedRelation = null;
@@ -102,6 +103,8 @@ document.addEventListener("DOMContentLoaded", function() {
             // '없음'에 선택된 식사 시간 구분 업데이트 (아침, 점심, 저녁 순서로 정렬)
             const sortedRelations = ['아침', '점심', '저녁'].filter(relation => selectedRelations.has(relation));
             recordedEmotionStatus.textContent = sortedRelations.join(' '); // 쉼표 대신 공백으로 구분
+
+            span1.textContent = '🍚     등록된 식사 시간';
 
             // 입력 필드와 선택된 식사 시간 구분 초기화
             hourInput.value = '';
