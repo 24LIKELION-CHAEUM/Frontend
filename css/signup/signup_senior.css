@@ -125,8 +125,16 @@ body {
 
 .option-time {
   font-family: 'label';
-  font-size: 12px;
+  font-size: 10px;
   line-height: 16px;
+  letter-spacing: -2%;
+  color: #7B7B7E;
+}
+
+.option-time .highlight {
+  font-family: 'heading1';
+  font-size: 10px;
+  line-height: 18px;
   letter-spacing: -2%;
   color: #7B7B7E;
 }
