@@ -16,55 +16,20 @@
                 <div class="header">
                     <h2>시니어</h2>
                     <div class="user-info">
-                        <img class="user-image" alt="사용자 이미지">
+                        <div class="user-image"></div>
                         <div>
-                            <div id="user-name">홍길동</div>
+                            <div id="user-name">홍길동 <span id="user-relation">관계</span></div>
                             <div id="user-birthdate">1945.06.21</div>
                         </div>
                     </div>
                 </div>
                 <h2>길동님의 오늘의 할 일</h2>
-                <div class="section">
-                    <div class="task">
-                        <img src="/img/pill.png" alt="pill icon">
-                        <div>
-                            <div>당뇨약</div>
-                            <div class="time">오전 10:00</div>
-                        </div>
-                        <div>완료</div>
-                    </div>
-                    <div class="task incomplete">
-                        <img src="/img/rice.png" alt="breakfast icon">
-                        <div>
-                            <div>아침 식사</div>
-                            <div class="time">오전 10:00</div>
-                            <div class="status">예정 시간으로부터 0시간 지났어요</div>
-                        </div>
-                        <div>완료 전</div>
-                    </div>
-                    <div class="task">
-                        <img src="/img/rice.png" alt="lunch icon">
-                        <div>
-                            <div>점심 식사</div>
-                            <div class="time">오후 12:00</div>
-                        </div>
-                        <div>완료 전</div>
-                    </div>
+                <div class="section" id="task-list">
+                    <!-- 할 일 목록이 여기에 추가됩니다. -->
                 </div>
                 <h2>길동님의 오늘의 감정</h2>
-                <div class="section">
-                    <div class="emotion">
-                        <div class="emotion-text">
-                            <img src="/img/sad.png" alt="emotion">
-                            <div>슬픔</div>
-                        </div>
-                        <div>오전 11:00</div>
-                    
-                        <div class="emotion-reason">
-                            이유: 이유 (공백 포함 19byte, 넘어가면 ...으로 보여짐)
-                        </div>
-                    </div>
-                    <a href="comment.html" class="btn">한마디 남기기</a>
+                <div class="section" id="emotion-section">
+                    <!-- 감정 정보가 여기에 추가됩니다. -->
                 </div>
             </div>
         </main>
@@ -87,5 +52,21 @@
             </a>
         </footer>
     </div>
+
+    <div id="overlay" class="overlay"></div>
+    <div id="bottom-sheet" class="bottom-sheet">
+        <div class="bottom-sheet-content">
+            <div class="sheet-header">
+                <span id="close-sheet" class="sheet-cancel">취소</span>
+                <span class="sheet-title">한마디 남기기</span>
+            </div>
+            <div class="sheet-body">
+                <label for="comment">한마디</label>
+                <textarea id="comment" placeholder="길동님께 한마디를 남겨주세요"></textarea>
+            </div>
+            <button class="sheet-submit">남기기</button>
+        </div>
+    </div>
+    <script src="/js/parent/welfare.js"></script>
 </body>
 </html>
