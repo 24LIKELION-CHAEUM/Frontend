@@ -1,168 +1,51 @@
-let map;
-let markers = [];
-let bottomSheet;
-let facilitiesList;
-let userLocationDiv;
 
-function initMap() {
-    try {
-        // Initialize the map
-        map = new google.maps.Map(document.getElementById("map"), {
-            zoom: 15,
-            center: { lat: 37.5665, lng: 126.9780 } // Default to Seoul
-        });
-
-        bottomSheet = document.getElementById('bottom-sheet');
-        facilitiesList = document.getElementById('facilities-list');
-        userLocationDiv = document.getElementById('user-location');
-        document.getElementById('close-bottom-sheet').onclick = () => {
-            bottomSheet.style.transform = 'translateY(100%)';
-        };
-
-        // Try HTML5 geolocation.
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    const pos = {
-                        lat: position.coords.latitude,
-                        lng: position.coords.longitude,
-                    };
-
-                    const userMarker = new google.maps.Marker({
-                        position: pos,
-                        map: map,
-                        title: "Your location",
-                        icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
-                    });
-
-                    map.setCenter(pos);
-
-                    // Set user's current location in the bottom sheet
-                    userLocationDiv.textContent = `내 위치: (${pos.lat.toFixed(5)}, ${pos.lng.toFixed(5)})`;
-
-                    // Fetch welfare facilities based on user's location
-                    fetchFacilities(pos.lat, pos.lng);
-                },
-                (error) => {
-                    handleLocationError(true, map.getCenter(), error);
-                }
-            );
-        } else {
-            // Browser doesn't support Geolocation
-            handleLocationError(false, map.getCenter());
-        }
-
-        document.getElementById('search-button').onclick = searchFacilities;
-    } catch (error) {
-        console.error("Error initializing map: ", error);
+    var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+        mapOption = { 
+            center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+            level: 10 // 지도의 확대 레벨 
+        }; 
+    
+    var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+    
+    // HTML5의 geolocation으로 사용할 수 있는지 확인합니다 
+    if (navigator.geolocation) {
+        
+        // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+        navigator.geolocation.getCurrentPosition(function(position) {
+            
+            var lat = position.coords.latitude, // 위도
+                lon = position.coords.longitude; // 경도
+            
+            var locPosition = new kakao.maps.LatLng(lat, lon), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
+                message = '<div style="padding:5px;">여기에 계신가요?!</div>'; // 인포윈도우에 표시될 내용입니다
+            
+            // 마커와 인포윈도우를 표시합니다
+            displayMarker(locPosition, message);
+                
+          }, function(error) {
+            console.error("Error occurred. Error code: " + error.code);
+            // Handle error here
+          });
+        
+    } else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
+        
+        var locPosition = new kakao.maps.LatLng(33.450701, 126.570667),    
+            message = 'geolocation을 사용할수 없어요..'
+            
+        displayMarker(locPosition, message);
     }
-}
-
-function handleLocationError(browserHasGeolocation, pos, error = {}) {
-    console.error(browserHasGeolocation ?
-        `Error: The Geolocation service failed (${error.message}).` :
-        "Error: Your browser doesn't support geolocation.");
-    map.setCenter(pos);
-}
-
-function fetchFacilities(lat, lng) {
-    const apiUrl = 'http://openapi.seoul.go.kr:8088/524943446c69616d36355a75736e71/xml/fcltOpenInfo_OWI/1/5/';
-
-    fetch(apiUrl)
-        .then(response => response.text())
-        .then(data => {
-            console.log('Seoul Open API response:', data);
-            const parser = new DOMParser();
-            const xmlDoc = parser.parseFromString(data, "text/xml");
-            const facilities = Array.from(xmlDoc.getElementsByTagName('row'));
-            displayFacilities(facilities);
-        })
-        .catch(error => {
-            console.error('Error fetching facilities:', error);
-        });
-}
-
-function displayFacilities(facilities) {
-    clearMarkers();
-    facilitiesList.innerHTML = ''; // Clear the list
-
-    facilities.forEach(facility => {
-        const latElement = facility.getElementsByTagName('LAT')[0];
-        const lngElement = facility.getElementsByTagName('LNG')[0];
-        const nameElement = facility.getElementsByTagName('FACLT_NM')[0];
-        const phoneElement = facility.getElementsByTagName('TEL_NO')[0];
-
-        if (!latElement || !lngElement || !nameElement) {
-            console.warn('Missing required data in facility:', facility);
-            return;
-        }
-
-        const lat = parseFloat(latElement.textContent);
-        const lng = parseFloat(lngElement.textContent);
-        const name = nameElement.textContent;
-        const phone = phoneElement ? phoneElement.textContent : 'N/A';
-
-        const position = { lat, lng };
-
-        const marker = new google.maps.Marker({
-            position: position,
-            map: map,
-            icon: {
-                url: "http://maps.google.com/mapfiles/ms/icons/purple-dot.png"
-            }
-        });
-
-        marker.addListener('click', () => {
-            map.setCenter(marker.getPosition());
-            showFacilityDetails({ name, phone });
-        });
-
-        markers.push(marker);
-
-        const facilityItem = document.createElement('div');
-        facilityItem.className = 'facility-item';
-        facilityItem.innerHTML = `
-            <span>${name}</span>
-            <button class="call-button" onclick="makeCall('${phone}')">전화</button>
-        `;
-        facilitiesList.appendChild(facilityItem);
-    });
-
-    bottomSheet.style.transform = 'translateY(0)';
-}
-
-function clearMarkers() {
-    markers.forEach(marker => {
-        marker.setMap(null);
-    });
-    markers = [];
-    facilitiesList.innerHTML = '';
-}
-
-function showFacilityDetails(facility) {
-    // Implement the logic to display facility details in the bottom sheet
-}
-
-function makeCall(phoneNumber) {
-    window.location.href = `tel:${phoneNumber}`;
-}
-
-function searchFacilities() {
-    const searchQuery = document.getElementById('search-box').value;
-    const apiUrl = `http://openapi.seoul.go.kr:8088/524943446c69616d36355a75736e71/xml/fcltOpenInfo_OWI/1/5/${searchQuery}`;
-
-    fetch(apiUrl)
-        .then(response => response.text())
-        .then(data => {
-            console.log('Search API response:', data);
-            const parser = new DOMParser();
-            const xmlDoc = parser.parseFromString(data, "text/xml");
-            const facilities = Array.from(xmlDoc.getElementsByTagName('row'));
-            displayFacilities(facilities);
-        })
-        .catch(error => {
-            console.error('Error fetching search results:', error);
-        });
-}
-
-window.initMap = initMap;
+    
+    // 지도에 마커 표시하는 함수입니다
+    function displayMarker(locPosition, message) {
+    
+        // 마커를 생성합니다
+        var marker = new kakao.maps.Marker({  
+            map: map, 
+            position: locPosition
+        }); 
+        
+    
+        // 지도 중심좌표를 접속위치로 변경합니다
+        map.setCenter(locPosition);      
+    }    
+    
