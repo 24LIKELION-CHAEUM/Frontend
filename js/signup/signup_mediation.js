@@ -78,6 +78,8 @@ document.addEventListener("DOMContentLoaded", function() {
             minuteInput.value = '';
             medicationDays.forEach(dayButton => dayButton.classList.remove('selected'));
             validateMedicationForm();
+
+            localStorage.setItem('medicationRegistered', 'true');
         }
     });
 

@@ -113,6 +113,12 @@ document.addEventListener("DOMContentLoaded", function() {
             reasonElement.textContent = '식사 시간 구분을 선택해주세요';
 
             submitButton.disabled = true;
+
+            // 아침, 점심, 저녁 모두 등록되었는지 확인
+            if (sortedRelations.length === 3) {
+                // 로컬 스토리지에 true 저장
+                localStorage.setItem('allMealsRegistered', 'true');
+            }
         }
     });
 });
