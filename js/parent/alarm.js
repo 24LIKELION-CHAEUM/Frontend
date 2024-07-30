@@ -6,13 +6,13 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-    let profileNameElements = document.querySelectorAll('.profile_name');
-    let profileName2Elements = document.querySelectorAll('.profile_name2');
+    let titleElements = document.querySelectorAll('.notification-title');
+    let messageElements = document.querySelectorAll('.notification-message');
 
-    profileNameElements.forEach(function(element) {
+    titleElements.forEach(function(element) {
         truncateText(element, 18);
     });
-    profileName2Elements.forEach(function(element) {
+    messageElements.forEach(function(element) {
         truncateText(element, 24);
     });
 });
