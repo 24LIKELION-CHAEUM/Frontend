@@ -18,3 +18,8 @@ function selectOption(element) {
     //버튼 활성화
     document.getElementById('signin_btn').disabled = false;
 }
+
+document.getElementById('signin_btn').addEventListener('click', function() {
+    var selectedType = document.querySelector('.select.selected .title').innerText;
+    localStorage.setItem('signupType', selectedType);
+});

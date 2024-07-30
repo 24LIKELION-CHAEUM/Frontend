@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입</title>
+    <link rel="stylesheet" href="/css/signup/signup_senior.css">
+    <style>
+        @import url(/css/fonts.css);
+    </style>
+</head>
+<body>
+    <div id="wrap">
+        <main>
+            <div class="topbar">
+                <button type="button" class="back_btn" onclick="window.history.back()">
+                    <img src="/assets/arrow_back.svg" alt="뒤로가기">
+                </button>           
+                <span class="comment_signup">회원가입</span> 
+            </div>
+            <div class="progress">
+                <progress id="progress" max="100" value="75"></progress>
+            </div>
+            <div class="input">
+                <span class="input_type">본인의 상황에 맞게 <br>
+                    등록해주세요</span>                 
+                    <div class="option" data-href="/html/signup/signup_meal.html">
+                        <div class="option-icon">🍚</div>
+                        <div class="option-info">
+                            <div class="option-title">식사 시간 등록하기</div>
+                            <div class="option-time">
+                                <span class="highlight">아침, 점심, 저녁</span>을 모두 등록해주세요</div>
+                        </div>
+                        <div class="next1" id="next1">
+                            <img src="/assets/arrow_next.svg" alt="next">
+                        </div>
+                    </div>
+                    <div class="option" data-href="/html/signup/signup_mediation.html">
+                        <div class="option-icon">💊</div>
+                        <div class="option-info">
+                            <div class="option-title">투약할 약 등록하기</div>
+                            <div class="option-time">
+                                <span class="highlight">최대 3개</span><span class="normal">까지 등록할 수 있어요</span>
+                            </div>
+                        </div>
+                        <div class="next2" id="next2">
+                            <img src="/assets/arrow_next.svg" alt="next">
+                        </div>
+                    </div>
+                    
+            </div>
+            <a href="/html/signin/signin.html">
+                <button id="signin_btn" class="signin_btn" disabled>회원가입 완료</button>
+            </a>
+        </main>
+    </div>
+    <script src="/js/signup/signup_senior.js"></script>
+</body>
+</html>
