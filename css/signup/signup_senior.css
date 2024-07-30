@@ -3,8 +3,6 @@ body {
     justify-content: center;
     height: 100vh;
     margin: 0;
-    min-width: 360px;
-    max-width: 400px;
   }
   
   #wrap {
@@ -170,5 +168,11 @@ body {
   a {
     text-decoration: none;
     width: 100%;
+  }
+  
+  @media screen and(max-width: 430px){
+    body{
+      width: 360px;
+      }
   }
   

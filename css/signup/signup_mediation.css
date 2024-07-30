@@ -277,3 +277,10 @@ main {
 .error-message.hidden {
     display: none;
 }
+
+@media screen and(max-width: 430px){
+    body{
+      width: 360px;
+      }
+  }
+  

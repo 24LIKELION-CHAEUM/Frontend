@@ -112,3 +112,9 @@ main {
     padding-top: 4px;
     color: #8C8C8E;
 }
+
+@media screen and(max-width: 430px){
+	body{
+		width: 360px;
+    }
+}

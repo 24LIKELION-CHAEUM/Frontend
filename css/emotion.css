@@ -539,3 +539,9 @@ main {
     background-color: #7B7B7E;
     cursor: not-allowed;
 }
+
+@media screen and(max-width: 430px){
+	body{
+		width: 360px;
+    }
+}
