@@ -47,8 +47,6 @@ main {
     background-color: transparent;
 }
 
-
-
 .calendar {
     text-align: center;
 }
@@ -89,7 +87,7 @@ main {
     border-radius: 10px;
 }
 
-.details {
+.date {
     margin: 24px 0;
     text-align: start;
 }
@@ -370,7 +368,7 @@ main {
     cursor: pointer;
 }
 
-.recorded-emotion {
+.mediation {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -380,7 +378,7 @@ main {
     border-radius: 12px;
 }
 
-.span1,.span2 {
+.mediation-title,.mediation-status {
     font-family: 'body3';
     font-size: 14px;
     line-height: 18px;
@@ -388,11 +386,11 @@ main {
     margin-top: 4px;
 }
 
-.span1{
+.mediation-title{
     color: #242427;
 }
 
-.span2{
+.mediation-status{
     color: #6838FF;
 }
 
@@ -407,7 +405,7 @@ main {
     margin-top: 7px;
 }
 
-.emotion-title, .hour {
+.repeat-title, .hour {
     font-family: 'body3';
     font-size: 14px;
     line-height: 18px;
@@ -417,7 +415,7 @@ main {
 }
 
 .emotions ,
-.emotions2 {
+.repeat {
     display: flex;
     justify-content: space-around;
     margin-bottom: 88px;
@@ -430,7 +428,7 @@ main {
 }
 
 .emotion-btn,
-.emotion-btn2 {
+.repeat-btn {
     background-color: #fff;
     border: 1px solid #B2B2B4;
     width: 40px;
@@ -446,7 +444,7 @@ main {
 }
 
 .emotion-btn.selected,
-.emotion-btn2.selected {
+.repeat-btn.selected {
     background-color: #F6F4FF;
     color: #8F6CFF;
     border: none;
