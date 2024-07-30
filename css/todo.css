@@ -428,7 +428,8 @@ main {
 }
 
 .emotion-btn,
-.repeat-btn {
+.repeat-btn,
+.repeat-btn2 {
     background-color: #fff;
     border: 1px solid #B2B2B4;
     width: 40px;
@@ -444,7 +445,8 @@ main {
 }
 
 .emotion-btn.selected,
-.repeat-btn.selected {
+.repeat-btn.selected,
+.repeat-btn2.selected {
     background-color: #F6F4FF;
     color: #8F6CFF;
     border: none;
