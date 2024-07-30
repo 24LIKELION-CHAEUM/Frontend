@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const errorMessage2 = document.getElementById('error-message2');
     const submitButton2 = document.getElementById('submit-button2');
     const taskNameInput2 = document.getElementById('reason2');
-    const taskDays = document.querySelectorAll('.emotion-btn2');
+    const taskDays = document.querySelectorAll('.repeat-btn');
     const tasks = document.querySelectorAll('.task');
 
     // 현재 날짜 정보와 주간 날짜 생성

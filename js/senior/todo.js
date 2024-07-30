@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const submitButton3 = document.getElementById('submit-button3');
     const errorMessage = document.getElementById('error-message');
     const medicationNameInput = document.getElementById('reason');
-    const medicationDays = document.querySelectorAll('.emotion-btn');
+    const medicationDays = document.querySelectorAll('.repeat-btn');
     const recordedEmotionStatus = document.getElementById('recorded-emotion-status');
 
     // modal2
