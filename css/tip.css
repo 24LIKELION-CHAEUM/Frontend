@@ -49,3 +49,9 @@ main {
 img {
     padding-bottom: 50px;
 }
+
+@media screen and(max-width: 430px){
+	body{
+		width: 360px;
+    }
+}

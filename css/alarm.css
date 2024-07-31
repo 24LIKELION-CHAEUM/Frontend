@@ -9,7 +9,7 @@ body {
     margin: 0;
 }
 
-#wrap {
+#container {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -25,7 +25,7 @@ main {
     height: 100%;
 }
 
-.topbar {
+.header {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -38,7 +38,7 @@ main {
     letter-spacing: -2%;
 }
 
-.back_btn {
+.back-button {
     position: absolute;
     left: 0%;
     border: none;
@@ -46,7 +46,7 @@ main {
     margin-left: 5%;
 }
 
-.result {
+.notification-list {
     justify-content: start;
     align-items: center;
     justify-items: center;
@@ -57,36 +57,26 @@ main {
     background-color: #F6F4FF;
 }
 
-.result2 {
-    justify-content: start;
-    align-items: center;
-    justify-items: center;
-    height: 96px;
-    padding-top: 16px;
-    padding-bottom: 16px;
-    padding-left: 16px;
-}
-
-.result_item {
+.notification-item {
     display: flex;
     text-align: start;
     align-items: center;
 }
 
-.profile_picture {
+.notification-image {
     width: 40px;
     height: 40px;
     margin-right: 12px;
 }
 
-.profile_info {
+.notification-details {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
     align-items: flex-start;
 }
 
-.profile_name {
+.notification-title {
     font-family: 'semibold';
     font-size: 16px;
     line-height: 20px;
@@ -95,7 +85,7 @@ main {
     color: #6838FF;
 }
 
-.birth_date, .relation {
+.task-date, .task-time {
     margin-right: 5px;
     font-family: 'body2';
     font-size: 12px;
@@ -104,11 +94,17 @@ main {
     color: #7B7B7E;
 }
 
-.profile_name2 {
+.notification-message {
     font-family: 'label';
     font-size: 12px;
     line-height: 16px;
     letter-spacing: -2%;
     padding-top: 4px;
     color: #8C8C8E;
+}
+
+@media screen and(max-width: 430px){
+    body{
+        width: 360px;
+    }
 }

@@ -298,3 +298,10 @@ a {
     text-decoration: none;
     width: 100%;
   }
+
+  @media screen and(max-width: 430px){
+    body{
+      width: 360px;
+      }
+  }
+  

@@ -10,6 +10,7 @@ body {
     margin-top: 0;
     margin-bottom: 68px; /* 네비게이션 바의 높이만큼 여백 추가 */
     overflow: auto;
+    width: 100%;
 }
 
 main {
@@ -361,4 +362,10 @@ main {
     box-shadow: 0 0 10px rgba(143, 108, 255, 0.15);
     border: 1px solid #8F6CFF;
     outline: none;
+}
+
+@media screen and(max-width: 430px){
+	body{
+		width: 360px;
+    }
 }

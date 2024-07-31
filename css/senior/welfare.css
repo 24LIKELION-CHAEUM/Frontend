@@ -277,3 +277,10 @@ hr{
     font-family: 'medium';
     font-size: 14px;
 }
+
+@media screen and(max-width: 430px){
+    body{
+      width: 360px;
+      }
+  }
+  

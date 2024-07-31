@@ -24,8 +24,8 @@ document.addEventListener("DOMContentLoaded", function() {
     const submitButton3 = document.getElementById('submit-button3');
     const errorMessage = document.getElementById('error-message');
     const medicationNameInput = document.getElementById('reason');
-    const medicationDays = document.querySelectorAll('.emotion-btn');
-    const recordedEmotionStatus = document.getElementById('recorded-emotion-status');
+    const medicationDays = document.querySelectorAll('.repeat-btn');
+    const recordedEmotionStatus = document.getElementById('mediation-status');
 
     // modal2
     const hourInput2 = document.getElementById('hour2');
@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const errorMessage2 = document.getElementById('error-message2');
     const submitButton2 = document.getElementById('submit-button2');
     const taskNameInput2 = document.getElementById('reason2');
-    const taskDays = document.querySelectorAll('.emotion-btn2');
+    const taskDays = document.querySelectorAll('.repeat-btn2');
 
     let selectedOption = null; // 현재 선택된 옵션 저장 변수
 

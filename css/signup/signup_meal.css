@@ -357,3 +357,10 @@ main {
 .relation-btn-wrapper .checkmark img {
     content: url('/assets/check_unactivated.svg');
 }
+
+@media screen and(max-width: 430px){
+    body{
+      width: 360px;
+      }
+  }
+  
