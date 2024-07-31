@@ -1,140 +1,129 @@
 document.addEventListener('DOMContentLoaded', function() {
-    var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-        mapOption = { 
-            center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
-            level: 3 // 지도의 확대 레벨 
-        }; 
-    //지도생성
+    // Kakao Maps API가 로드되었는지 확인
+    if (typeof kakao === 'undefined' || typeof kakao.maps === 'undefined' || typeof kakao.maps.services === 'undefined') {
+        console.error('Kakao Maps API가 로드되지 않았습니다.');
+        return;
+    }
+
+    // Kakao Maps API 설정 및 지도 초기화 코드
+    var mapContainer = document.getElementById('map'); // 지도를 표시할 div
+    var mapOption = { 
+        center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
+        level: 3 // 지도의 확대 레벨
+    }; 
     var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
     var username = '홍길동';
     var userPosition = null;
-    var marker = new kakao.maps.Marker(), // 클릭한 위치를 표시할 마커입니다
-        infowindow = new kakao.maps.InfoWindow({zindex:1}); // 클릭한 위치에 대한 주소를 표시할 인포윈도우입니다
+    var marker = new kakao.maps.Marker(); // 클릭한 위치를 표시할 마커입니다
+    var infowindow = new kakao.maps.InfoWindow({zindex:1}); // 클릭한 위치에 대한 주소를 표시할 인포윈도우입니다
 
-    var defaultFacilities = [
-        {
-            title: '동그라미재가노인복지센터',
-            address: '서울 서초구 강남대로8길 49 201호',
-            sub: '서브 텍스트 공백포함 20자 넘어가면 ... 으로',
-            phone: '0507-1346-6046',
-            lat: 337.469150863,
-            lon: 127.043199747,
-            distance: 0.468,
-            walkingTime: 8
-        },
-        {
-            title: '양재노인종합복지관',
-            address: '서울 서초구 강남대로30길 73-7 서초노인종합복지관',
-            sub: '서브 텍스트 공백포함 20자 넘어가면 ... 으로',
-            phone: '02-578-1515',
-            lat: 37.48297489999999,
-            lon: 127.0408069,
-            distance: 1.8,
-            walkingTime: 29
-        },
-        {
-            title: '서초구립 본마을데이케어센터',
-            address: '서울 서초구 본마을2길 2 본마을 노인복지센터',
-            sub: '서브 텍스트 공백포함 20자 넘어가면 ... 으로',
-            phone: '02-6933-1515',
-            lat: 37.454417636,
-            lon: 127.053431926,
-            distance: 2.1,
-            walkingTime: 33
-        }
-    ];
-
-    // HTML5의 geolocation으로 사용할 수 있는지 확인합니다 
     if (navigator.geolocation) {
-        
-        // GeoLocation을 이용해서 접속 위치를 얻어옵니다
         navigator.geolocation.getCurrentPosition(function(position) {
-            
-            var lat = position.coords.latitude, // 위도
-                lon = position.coords.longitude; // 경도
-            
+            var lat = position.coords.latitude; 
+            var lon = position.coords.longitude; 
+
             userPosition = { lat: lat, lng: lon };
-            var locPosition = new kakao.maps.LatLng(lat, lon); // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
-            
-            // 마커 표시
+            var locPosition = new kakao.maps.LatLng(lat, lon); 
+
             displayMarker(locPosition);
-            
-            // 예시 데이터를 사용하여 주소 표시
-            var detailAddr = "서울특별시 서초구 강남대로"; // 예시 주소
-            var arr = detailAddr.split(" ");
-            var city = arr[0];
-            var district = arr[1];
-            var subDistrict = arr[2];
-            var userLocationElement = document.getElementById('user-location');
-            userLocationElement.innerHTML = `
-                <div class="location-container">
-                    <img src="/img/위치.svg" alt="location icon" class="location-icon">
-                    <span class="location-text">내 위치</span>
-                    <span class="locationtt"> ${city} ${district} ${subDistrict}</span>
-                </div>
-            `;
-
-            // 기본 시설 정보 표시
-            displayBottomSheet(defaultFacilities);
-            displayMarkers(defaultFacilities);
-
-          }, function(error) {
+            updateLocationInfo(lat, lon);
+            searchFacilities(lat, lon, '노인 복지 시설');
+        }, function(error) {
             console.error("Error occurred. Error code: " + error.code);
-            // Handle error here
-          });  
-
-    } else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
-        
-        var locPosition = new kakao.maps.LatLng(37.566826, 126.9786567),    
-            message = 'geolocation을 사용할수 없어요..'
-            
-        displayMarker(locPosition, message);
+            var defaultPosition = new kakao.maps.LatLng(37.566826, 126.9786567);
+            displayMarker(defaultPosition);
+            updateLocationInfo(37.566826, 126.9786567);
+            searchFacilities(37.566826, 126.9786567, '노인 복지 시설');
+        }); 
+    } else {
+        var defaultPosition = new kakao.maps.LatLng(37.566826, 126.9786567);
+        displayMarker(defaultPosition);
+        updateLocationInfo(37.566826, 126.9786567);
+        searchFacilities(37.566826, 126.9786567, '노인 복지 시설');
     }
-    
-    // 지도에 마커 표시하는 함수입니다
+
     function displayMarker(locPosition) {
-    
-        // 마커를 생성합니다
         var marker = new kakao.maps.Marker({  
             map: map, 
             position: locPosition
         }); 
-        
-        // 지도 중심좌표를 접속위치로 변경합니다
         map.setCenter(locPosition);      
     }    
 
-    // 지도에 시설 마커들을 표시하는 함수
+    function updateLocationInfo(lat, lon) {
+        var geocoder = new kakao.maps.services.Geocoder();
+        geocoder.coord2RegionCode(lon, lat, function(result, status) {
+            if (status === kakao.maps.services.Status.OK) {
+                var detailAddr = result[0].address_name;
+                var arr = detailAddr.split(" ");
+                var city = arr[0];
+                var district = arr[1];
+                var subDistrict = arr[2];
+                var userLocationElement = document.getElementById('user-location');
+                userLocationElement.innerHTML = `
+                    <div class="location-container">
+                        <img src="/img/위치.svg" alt="location icon" class="location-icon">
+                        <span class="location-text">내 위치</span>
+                        <span class="locationtt"> ${city} ${district} ${subDistrict}</span>
+                    </div>
+                `;
+            } else {
+                console.error('주소 변환 실패:', status);
+            }
+        });
+    }
+
+    function searchFacilities(lat, lon, keyword, isSearch) {
+        var places = new kakao.maps.services.Places();
+        var callback = function(result, status) {
+            if (status === kakao.maps.services.Status.OK) {
+                // 사회, 공공기관 카테고리만 필터링
+                var filteredFacilities = result.filter(function(place) {
+                    return place.category_name.includes("사회") || place.category_name.includes("공공기관")|| place.category_name.includes("병원");
+                }).map(function(place) {
+                    var distance = calculateDistance(lat, lon, place.y, place.x);
+                    return {
+                        title: place.place_name,
+                        address: place.road_address_name || place.address_name,
+                        sub: place.category_name,
+                        phone: place.phone,
+                        lat: place.y,
+                        lon: place.x,
+                        distance: distance.toFixed(1),
+                        walkingTime: calculateWalkingTime(distance)
+                    };
+                });
+                console.log('검색 결과:', filteredFacilities); // 검색 결과를 콘솔에 출력
+                var title = isSearch ? '검색 결과' : `${username} 님과 가까운 주변 복지시설`;
+                displayBottomSheet(filteredFacilities, title);
+                displayMarkers(filteredFacilities);
+            } else {
+                console.error('검색 실패:', status);
+            }
+        };
+        places.keywordSearch(keyword, callback, { 
+            location: new kakao.maps.LatLng(lat, lon),
+            radius: 5000 
+        });
+    }
+
     function displayMarkers(facilities) {
-        // 마커 이미지의 이미지 주소입니다
-        var imageSrc = "/img/위치.png"; 
-        
         for (var i = 0; i < facilities.length; i++) {
-            
-            // 마커 이미지의 이미지 크기 입니다
-            var imageSize = new kakao.maps.Size(31, 36); 
-            
-            // 마커 이미지를 생성합니다    
-            var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
-            
-            // 마커를 생성합니다
             var marker = new kakao.maps.Marker({
-                map: map, // 마커를 표시할 지도
-                position: new kakao.maps.LatLng(facilities[i].lat, facilities[i].lon), // 마커를 표시할 위치
-                title: facilities[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-                image: markerImage // 마커 이미지 
+                map: map,
+                position: new kakao.maps.LatLng(facilities[i].lat, facilities[i].lon),
+                title: facilities[i].title,
+                
             });
         }
     }
 
-
-    // 문자열 길이 제한 함수
     function truncateString(str, num) {
         return (str.length <= num) ? str : str.slice(0, num) + '...';
     }
 
-    //바텀시트
-    function displayBottomSheet(facilities, title = `${username} 님과 가까운 주변 복지시설`) {
+    function displayBottomSheet(facilities, title) {
         var bottomSheet = document.getElementById('bottom-sheet');
         var facilityList = document.getElementById('facility-list');
         facilityList.innerHTML = '';
@@ -154,7 +143,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         ${index === 0 ? `<h2>${title}</h2>` : ''}
                         <img src="/img/facility.svg" alt="Facility Image">
                         <div class="facility-name">${truncatedTitle}</div>
-                        <div class="facility-address">${truncatedSub}</div>
+                        <div class="facility-sub">${truncatedSub}</div>
                         <div class="facility-distance">${distance}km | 도보 ${walkingTime}분</div>
                         <div class="facility-address">${truncatedAddress}</div>
                         <button class="call-button" onclick="showCallPopup('${facility.title}', '${facility.phone}')">
@@ -165,101 +154,77 @@ document.addEventListener('DOMContentLoaded', function() {
                 facilityList.appendChild(item);
             });
         }
-            bottomSheet.classList.add('active');
+        bottomSheet.classList.add('active');
     }
-
 
     function makeCall(phoneNumber) {
         window.location.href = `tel:${phoneNumber}`;
     }
-    
-     // 팝업창을 보여주는 함수
-     window.showCallPopup = function(facilityName, phoneNumber) {
+
+    window.showCallPopup = function(facilityName, phoneNumber) {
         var popupBackground = document.createElement('div');
         popupBackground.className = 'popup-background active';
         document.body.appendChild(popupBackground);
-        
+
         var popup = document.getElementById('call-popup');
         var popupFacilityName = document.getElementById('popup-facility-name');
         var confirmCallButton = document.getElementById('confirm-call');
-        
+
         popupFacilityName.textContent = `${facilityName}에 전화할까요?`;
         confirmCallButton.onclick = function() {
             makeCall(phoneNumber);
         };
 
-        // 팝업을 화면 가운데에 표시
         popup.classList.add('active');
 
-        // 팝업 닫기 버튼 이벤트
         document.getElementById('cancel-call').onclick = function() {
             popup.classList.remove('active');
             popupBackground.classList.remove('active');
             setTimeout(() => {
                 document.body.removeChild(popupBackground);
-            }, 300); // 배경 페이드 아웃 시간과 맞춤
+            }, 300);
         };
     }
 
-    // Toggle bottom sheet functionality
     var bottomSheet = document.getElementById('bottom-sheet');
     var bottomSheetHandle = document.getElementById('bottom-sheet-handle');
       
     bottomSheetHandle.addEventListener('click', function() {
         if (bottomSheet.classList.contains('active')) {
             bottomSheet.classList.remove('active');
-            bottomSheet.style.height = '30%'; // Move back to initial position
+            bottomSheet.style.height = '30%';
         } else {
             bottomSheet.classList.add('active');
-            bottomSheet.style.height = `calc(100vh - 110px)`; // Fully show the bottom sheet
+            bottomSheet.style.height = `calc(100vh - 110px)`;
         }
     });
 
-    // 검색 기능 추가
     document.getElementById('search-button').addEventListener('click', function() {
         var searchInput = document.getElementById('search-input').value;
-        if (searchInput.includes('노인') || searchInput.includes('복지') || searchInput.includes('시설')) {
-            map.setLevel(5); // 지도를 줌 아웃
-            // 예시 데이터로 검색 결과 표시
-            var searchResults = [
-                {
-                    title: '서초성심노인복지센터',
-                    address: '서울 서초구 반포대로22길 61 서초노인회관',
-                    sub: '서브 텍스트 공백포함 20자 넘어가면 ... 으로',
-                    phone: '02-987-6543',
-                    lat: 37.490571397,
-                    lon: 127.011758060,
-                    distance: 4.6,
-                    walkingTime: 74
-                },
-                {
-                    title: '강남구립 논현노인종합복지관',
-                    address: '서울특별시 강남구 논현동 125-13',
-                    sub: '서브 텍스트 공백포함 20자 넘어가면 ... 으로',
-                    phone: '02-541-0226',
-                    lat: 37.512038952696244,
-                    lon: 127.02612524032651,
-                    distance: 5.4,
-                    walkingTime: 13
-                },
-                {
-                    title: '역삼노인복지관',
-                    address: '서울특별시 강남구 도곡로27길 27',
-                    sub: '서브 텍스트 공백포함 20자 넘어가면 ... 으로',
-                    phone: '02-501-5674',
-                    lat: 37.494545171,
-                    lon: 127.041836735,
-                    distance: 3.3,
-                    walkingTime: 56
-                }
-            ];
-            displayBottomSheet(searchResults, "검색 결과");
-            displayMarkers(searchResults);
-        }
-        else{
-            displayBottomSheet([], "검색 결과");
-
-        }
+        searchFacilities(userPosition.lat, userPosition.lng, searchInput, true);
     });
+
+    function calculateDistance(lat1, lon1, lat2, lon2) {
+        var R = 6371; 
+        var dLat = deg2rad(lat2 - lat1);
+        var dLon = deg2rad(lon2 - lon1);
+        var a = 
+            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+            Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        var d = R * c;
+        return d;
+    }
+
+    function deg2rad(deg) {
+        return deg * (Math.PI / 180);
+    }
+
+    function calculateWalkingTime(distance) {
+        var speed = 5;
+        var time = (distance / speed) * 60;
+        return Math.round(time);
+    }
 
 });
