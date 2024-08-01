@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", function() {
         month: 'long',
         day: 'numeric',
     });
+
     const dayOfWeek = daysOfWeek[(currentDay + 6) % 7]; 
     const tasks = document.querySelectorAll('.task');
     const options = document.querySelectorAll('.option');
@@ -26,6 +27,13 @@ document.addEventListener("DOMContentLoaded", function() {
     const medicationNameInput = document.getElementById('reason');
     const medicationDays = document.querySelectorAll('.repeat-btn');
     const recordedEmotionStatus = document.getElementById('mediation-status');
+
+
+    //   const taskForm = document.getElementById('task-form');
+    const taskTitleInput = document.getElementById('task-title');
+    const taskTimeInput = document.getElementById('task-time');
+    const taskTypeSelect = document.getElementById('task-type');
+    const repeatDaysInputs = document.querySelectorAll('#repeat-days input[type="checkbox"]');
 
     // modal2
     const hourInput2 = document.getElementById('hour2');
@@ -64,6 +72,97 @@ document.addEventListener("DOMContentLoaded", function() {
             </div>
         `).join('');
     }
+
+//연동 코드 추가//
+    // API에서 할 일 목록 가져오기
+    function fetchTasks(date) {
+        const url = `/tasks/?date=${date}`;
+        fetch(url, {
+            headers: {
+                'Authorization': `Token ${token}`,
+            }
+        })
+        .then(response => response.json())
+        .then(data => displayTasks(data.tasks))
+        .catch(error => console.error('Error fetching tasks:', error));
+    }
+
+    // 할 일 목록 화면에 표시하기
+    function displayTasks(tasks) {
+        tasksContainer.innerHTML = tasks.map(task => `
+            <div class="task" data-id="${task.id}">
+                <div class="task-icon"><img src="/assets/default.png" alt=""></div>
+                <div class="task-info">
+                    <div class="task-title">${task.title}</div>
+                    <div class="task-time">${task.time}</div>
+                </div>
+                <div class="task-status">
+                    <img src="/assets/check_${task.completed ? 'activated' : 'unactivated'}.svg" alt="체크" class="check-button">
+                </div>
+            </div>
+        `).join('');
+        addCheckButtonListeners();
+    }
+
+    // 새로운 할 일 생성하기
+    function createTask(task) {
+        const url = '/tasks/create/';
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Token ${token}`,
+            },
+            body: JSON.stringify(task)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Task created:', data);
+            fetchTasks('2024-07-22'); // 새로 생성된 할 일 목록을 다시 가져옵니다.
+        })
+        .catch(error => console.error('Error creating task:', error));
+    }
+
+    // 할 일 완료 상태 업데이트
+    function updateTaskStatus(taskId, completed) {
+        const url = `/tasks/${taskId}/check_complete/`;
+        fetch(url, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Token ${token}`,
+            },
+            body: JSON.stringify({ completed })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Task status updated:', data);
+            fetchTasks('2024-07-22'); // 변경된 할 일 목록을 다시 가져옵니다.
+        })
+        .catch(error => console.error('Error updating task status:', error));
+    }
+
+    taskForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const newTask = {
+            title: taskTitleInput.value.trim(),
+            time: taskTimeInput.value,
+            completed: false,
+            type: taskTypeSelect.value,
+            repeat_days: Array.from(repeatDaysInputs).filter(input => input.checked).map(input => parseInt(input.value))
+        };
+
+        createTask(newTask);
+
+          // 입력 필드 초기화
+          taskTitleInput.value = '';
+          taskTimeInput.value = '';
+          taskTypeSelect.value = 'MEAL';
+          repeatDaysInputs.forEach(input => input.checked = false);
+      });
+    //
+
 
     tasks.forEach(task => {
         const checkButton = task.querySelector('.task-status img');
@@ -266,4 +365,8 @@ document.addEventListener("DOMContentLoaded", function() {
     displayWeekCalendar();
     document.getElementById('full-date').textContent = fullDate;
     document.getElementById('day-of-week').textContent = `${dayOfWeek}요일`;
+
+
+    // 할 일 목록 가져오기 호출
+    fetchTasks('2024-07-22');
 });
