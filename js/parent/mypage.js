@@ -3,6 +3,10 @@ document.addEventListener('DOMContentLoaded', function() {
     if (initialPageId === 'mypage') {
         initializeMypage();
     }
+
+    const realUpload = document.querySelector('.real-upload');
+    const upload = document.querySelector('.edit-icon');
+    upload.addEventListener('click', () => realUpload.click());
 });
 
 function initializeMypage() {
