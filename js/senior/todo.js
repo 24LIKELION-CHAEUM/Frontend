@@ -28,13 +28,6 @@ document.addEventListener("DOMContentLoaded", function() {
     const medicationDays = document.querySelectorAll('.repeat-btn');
     const recordedEmotionStatus = document.getElementById('mediation-status');
 
-
-    //   const taskForm = document.getElementById('task-form');
-    const taskTitleInput = document.getElementById('task-title');
-    const taskTimeInput = document.getElementById('task-time');
-    const taskTypeSelect = document.getElementById('task-type');
-    const repeatDaysInputs = document.querySelectorAll('#repeat-days input[type="checkbox"]');
-
     // modal2
     const hourInput2 = document.getElementById('hour2');
     const minuteInput2 = document.getElementById('minute2');
@@ -42,6 +35,14 @@ document.addEventListener("DOMContentLoaded", function() {
     const submitButton2 = document.getElementById('submit-button2');
     const taskNameInput2 = document.getElementById('reason2');
     const taskDays = document.querySelectorAll('.repeat-btn2');
+
+    /**/
+    const taskForm = document.getElementById('task-form');
+    const taskTitleInput = document.getElementById('task-title');
+    const taskTimeInput = document.getElementById('task-time');
+    const taskTypeSelect = document.getElementById('task-type');
+    const repeatDaysInputs = document.querySelectorAll('#repeat-days input[type="checkbox"]');
+    
 
     let selectedOption = null; // 현재 선택된 옵션 저장 변수
 
@@ -78,6 +79,7 @@ document.addEventListener("DOMContentLoaded", function() {
     function fetchTasks(date) {
         const url = `/tasks/?date=${date}`;
         fetch(url, {
+            method:`GET`,
             headers: {
                 'Authorization': `Token ${token}`,
             }
@@ -118,7 +120,7 @@ document.addEventListener("DOMContentLoaded", function() {
         .then(response => response.json())
         .then(data => {
             console.log('Task created:', data);
-            fetchTasks('2024-07-22'); // 새로 생성된 할 일 목록을 다시 가져옵니다.
+            fetchTasks(today.toISOString().split('T')[0]);  // 새로 생성된 할 일 목록을 다시 가져옵니다.
         })
         .catch(error => console.error('Error creating task:', error));
     }
@@ -137,10 +139,45 @@ document.addEventListener("DOMContentLoaded", function() {
         .then(response => response.json())
         .then(data => {
             console.log('Task status updated:', data);
-            fetchTasks('2024-07-22'); // 변경된 할 일 목록을 다시 가져옵니다.
+            fetchTasks(today.toISOString().split('T')[0]); // 변경된 할 일 목록을 다시 가져옵니다.
         })
         .catch(error => console.error('Error updating task status:', error));
     }
+    // 체크 버튼 이벤트 리스너 추가
+    function addCheckButtonListeners() {
+        const checkButtons = document.querySelectorAll('.check-button');
+        checkButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const taskElement = this.closest('.task');
+                const taskId = taskElement.dataset.id;
+                const completed = !taskElement.classList.contains('completed');
+                updateTaskStatus(taskId, completed);
+            });
+        });
+    }
+
+    // 폼 제출 이벤트 리스너
+    taskForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const newTask = {
+            title: taskTitleInput.value.trim(),
+            time: taskTimeInput.value,
+            completed: false,
+            type: taskTypeSelect.value,
+            repeat_days: Array.from(repeatDaysInputs).filter(input => input.checked).map(input => parseInt(input.value))
+        };
+
+        createTask(newTask);
+
+        // 입력 필드 초기화
+        // 입력 필드 초기화
+        if (taskTitleInput) taskTitleInput.value = '';
+        if (taskTimeInput) taskTimeInput.value = '';
+        if (taskTypeSelect) taskTypeSelect.value = 'MEAL';
+        if (repeatDaysInputs) repeatDaysInputs.forEach(input => input.checked = false);
+    });
+//
 
     taskForm.addEventListener('submit', function(event) {
         event.preventDefault();
