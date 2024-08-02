@@ -76,18 +76,25 @@ document.addEventListener("DOMContentLoaded", function() {
 
 //연동 코드 추가//
     // API에서 할 일 목록 가져오기
-    function fetchTasks(date) {
+    async function fetchTasks(date) {
         const url = `/tasks/?date=${date}`;
-        fetch(url, {
-            method:`GET`,
-            headers: {
-                'Authorization': `Token ${token}`,
+        try {
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                }
+            });
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
-        })
-        .then(response => response.json())
-        .then(data => displayTasks(data.tasks))
-        .catch(error => console.error('Error fetching tasks:', error));
+            const data = await response.json();
+            displayTasks(data.tasks);
+        } catch (error) {
+            console.error('Error fetching tasks:', error);
+        }
     }
+
 
     // 할 일 목록 화면에 표시하기
     function displayTasks(tasks) {
@@ -107,42 +114,52 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // 새로운 할 일 생성하기
-    function createTask(task) {
+    async function createTask(task) {
         const url = '/tasks/create/';
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Token ${token}`,
-            },
-            body: JSON.stringify(task)
-        })
-        .then(response => response.json())
-        .then(data => {
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+                body: JSON.stringify(task)
+            });
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
             console.log('Task created:', data);
-            fetchTasks(today.toISOString().split('T')[0]);  // 새로 생성된 할 일 목록을 다시 가져옵니다.
-        })
-        .catch(error => console.error('Error creating task:', error));
+            fetchTasks(today.toISOString().split('T')[0]); // 새로 생성된 할 일 목록을 다시 가져옵니다.
+        } catch (error) {
+            console.error('Error creating task:', error);
+        }
     }
 
+
     // 할 일 완료 상태 업데이트
-    function updateTaskStatus(taskId, completed) {
+    async function updateTaskStatus(taskId, completed) {
         const url = `/tasks/${taskId}/check_complete/`;
-        fetch(url, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Token ${token}`,
-            },
-            body: JSON.stringify({ completed })
-        })
-        .then(response => response.json())
-        .then(data => {
+        try {
+            const response = await fetch(url, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+                body: JSON.stringify({ completed })
+            });
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
             console.log('Task status updated:', data);
             fetchTasks(today.toISOString().split('T')[0]); // 변경된 할 일 목록을 다시 가져옵니다.
-        })
-        .catch(error => console.error('Error updating task status:', error));
+        } catch (error) {
+            console.error('Error updating task status:', error);
+        }
     }
+
     // 체크 버튼 이벤트 리스너 추가
     function addCheckButtonListeners() {
         const checkButtons = document.querySelectorAll('.check-button');
@@ -155,6 +172,7 @@ document.addEventListener("DOMContentLoaded", function() {
             });
         });
     }
+    
 
     // 폼 제출 이벤트 리스너
     taskForm.addEventListener('submit', function(event) {
@@ -170,7 +188,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         createTask(newTask);
 
-        // 입력 필드 초기화
+    
         // 입력 필드 초기화
         if (taskTitleInput) taskTitleInput.value = '';
         if (taskTimeInput) taskTimeInput.value = '';
@@ -404,6 +422,6 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById('day-of-week').textContent = `${dayOfWeek}요일`;
 
 
-    // 할 일 목록 가져오기 호출
-    fetchTasks('2024-07-22');
+    // 오늘의 할 일 목록 가져오기 호출
+    fetchTasks(today.toISOString().split('T')[0]);
 });
