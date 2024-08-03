@@ -50,8 +50,8 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     //알림읽음
-    async function markAsRead(알림id) {
-        const url = `/notifications/${알림id}/check_read/`;
+    async function markAsRead(notificationID) {
+        const url = `/notifications/${notificationID}/check_read/`;
         try {
             const response = await fetch(url, {
                 method: 'PATCH',
@@ -99,8 +99,8 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // 알림 삭제하기
-    async function deleteNotification(알림id) {
-        const url = `/notifications/${알림id}}/`;
+    async function deleteNotification(notificationID) {
+        const url = `/notifications/${notificationID}/`;
         try {
             const response = await fetch(url, {
                 method: 'DELETE',

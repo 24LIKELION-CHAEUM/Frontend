@@ -1,4 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
+    const token = localStorage.getItem("access");
+    
     const daysOfWeek = ['월', '화', '수', '목', '금', '토', '일'];
     const today = new Date();
     const currentDay = today.getDay();
