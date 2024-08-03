@@ -10,28 +10,31 @@
     </style>
 </head>
 <body>
-    <div id="wrap">
-        <main>
-            <div class="topbar">
-                <button type="button" class="back_btn" onclick="window.history.back()">
-                    <img src="/assets/arrow_back.svg" alt="대체 텍스트">
-                </button>           
-                <span class="comment_login">로그인</span> 
-            </div>
-            <div class="input">
-                <div class="signin_input">
-                    <span class="title_id">아이디</span> 
-                    <input class="input_id" placeholder="아이디를 입력해주세요"/>
+    
+        <div id="wrap">
+            <main>
+                <div class="topbar">
+                    <button type="button" class="back_btn" onclick="window.history.back()">
+                        <img src="{% static 'img/arrow_back.svg' %}" alt="뒤로가기">
+                    </button>           
+                    <span class="comment_login">로그인</span> 
                 </div>
-                <div class="signin_input">
-                    <span class="title_password">비밀번호</span> 
-                    <input class="input_password" placeholder="비밀번호를 입력해주세요"/>
+                <div class="input">
+                    <form id="loginForm" method="post">
+                        {% csrf_token %}
+                        <div class="signin_input">
+                            <span class="title_id">아이디</span> 
+                            <input class="input_id" name="username" placeholder="아이디를 입력해주세요" required>
+                        </div>
+                        <div class="signin_input">
+                            <span class="title_password">비밀번호</span> 
+                            <input class="input_password" type="password" name="password" placeholder="비밀번호를 입력해주세요" required>
+                        </div>
+                        <button id="signin_btn" class="signin_btn" type="submit" disabled>로그인</button>
+                    </form>
                 </div>
-            </div>
-            <a href="">
-                <button id="signin_btn" class="signin_btn" disabled>다음</button>
-            </a>
-        </main>
+            </main>
+        
     </div>
     <script src="/js/signin/signin.js"></script>
 </body>

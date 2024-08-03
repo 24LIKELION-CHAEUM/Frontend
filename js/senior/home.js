@@ -55,4 +55,31 @@ document.addEventListener('DOMContentLoaded', function() {
         showModal();
         localStorage.setItem('hasVisited', 'true');
     }
+    //  읽지 않은 알림 개수 가져오기
+    async function fetchUnreadCount() {
+        const url = 'http://127.0.0.1:8000/notifications/unread_count/';
+        try {
+            const response = await fetch(url, {
+                method: 'GET',
+                /*headers: {
+                    'Authorization': `Bearer ${token}`,
+                }*/
+            });
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            displayUnreadCount(data.unread_count);
+        } catch (error) {
+            console.error('Error fetching unread count:', error);
+        }
+    }
+
+    function displayUnreadCount(count) {
+        const unreadCountElement = document.getElementById('notification-count');
+        if (unreadCountElement) {
+            unreadCountElement.textContent = `${count}`;
+        }
+    }
+    fetchUnreadCount()
 });

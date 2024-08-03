@@ -74,6 +74,7 @@ main {
     flex-direction: column;
     flex-grow: 1;
     align-items: flex-start;
+    margin-bottom: 20px;
 }
 
 .notification-title {

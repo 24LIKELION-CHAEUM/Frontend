@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
-    const token = localStorage.getItem("access");
-    
+    const token = localStorage.getItem('access_token');
+
     const daysOfWeek = ['월', '화', '수', '목', '금', '토', '일'];
     const today = new Date();
     const currentDay = today.getDay();
@@ -38,13 +38,11 @@ document.addEventListener("DOMContentLoaded", function() {
     const taskNameInput2 = document.getElementById('reason2');
     const taskDays = document.querySelectorAll('.repeat-btn2');
 
-    /**/
     const taskForm = document.getElementById('task-form');
     const taskTitleInput = document.getElementById('task-title');
     const taskTimeInput = document.getElementById('task-time');
     const taskTypeSelect = document.getElementById('task-type');
     const repeatDaysInputs = document.querySelectorAll('#repeat-days input[type="checkbox"]');
-    
 
     let selectedOption = null; // 현재 선택된 옵션 저장 변수
 
@@ -68,38 +66,45 @@ document.addEventListener("DOMContentLoaded", function() {
     // 주간 달력 표시
     function displayWeekCalendar() {
         const weekDates = calculateWeekDates();
-        weekCalendar.innerHTML = weekDates.map(({ day, date }, index) => `
-            <div class="day ${index === (currentDay === 0 ? 6 : currentDay - 1) ? 'active' : ''}">
-                <span class="day-name">${day}</span>
-                <span class="day-date">${date}</span>
-            </div>
-        `).join('');
-    }
-
-//연동 코드 추가//
-    // API에서 할 일 목록 가져오기
-    async function fetchTasks(date) {
-        const url = `/tasks/?date=${date}`;
-        try {
-            const response = await fetch(url, {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                }
-            });
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            const data = await response.json();
-            displayTasks(data.tasks);
-        } catch (error) {
-            console.error('Error fetching tasks:', error);
+        if (weekCalendar) {
+            weekCalendar.innerHTML = weekDates.map(({ day, date }, index) => `
+                <div class="day ${index === (currentDay === 0 ? 6 : currentDay - 1) ? 'active' : ''}">
+                    <span class="day-name">${day}</span>
+                    <span class="day-date">${date}</span>
+                </div>
+            `).join('');
+        } else {
+            console.error('weekCalendar element not found');
         }
     }
 
+    // API에서 할 일 목록 가져오기
+    async function fetchTasks(date) {
+        const url = `http://127.0.0.1:8000/tasks?date=${date}`;
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            } else {
+                console.log("success")
+            
+            }
+        const data = await response.json();
+        console.log(data);
+        displayTasks(data);
+    } catch (error) {
+        console.error('Error fetching tasks:', error);
+    }
+}
 
     // 할 일 목록 화면에 표시하기
     function displayTasks(tasks) {
+        const tasksContainer = document.getElementById('tasks');
+        console.log(tasksContainer);
+        if (!tasksContainer) {
+            console.error('tasksContainer element not found');
+            return;
+        }
         tasksContainer.innerHTML = tasks.map(task => `
             <div class="task" data-id="${task.id}">
                 <div class="task-icon"><img src="/assets/default.png" alt=""></div>
@@ -117,7 +122,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // 새로운 할 일 생성하기
     async function createTask(task) {
-        const url = '/tasks/create/';
+        const url = 'http://127.0.0.1:8000/tasks/';
+        console.log(task);
         try {
             const response = await fetch(url, {
                 method: 'POST',
@@ -126,106 +132,108 @@ document.addEventListener("DOMContentLoaded", function() {
                     'Authorization': `Bearer ${token}`,
                 },
                 body: JSON.stringify(task)
+                
             });
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             const data = await response.json();
             console.log('Task created:', data);
+            //response가 error일 때 에러메세지
             fetchTasks(today.toISOString().split('T')[0]); // 새로 생성된 할 일 목록을 다시 가져옵니다.
         } catch (error) {
             console.error('Error creating task:', error);
         }
     }
 
-
     // 할 일 완료 상태 업데이트
     async function updateTaskStatus(taskId, completed) {
-        const url = `/tasks/${taskId}/check_complete/`;
+        const url = `http://127.0.0.1:8000/tasks/${taskId}/check_complete/`;
         try {
             const response = await fetch(url, {
                 method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`,
-                },
-                body: JSON.stringify({ completed })
+                // headers: {
+                //     'Content-Type': 'application/json',
+                //     'Authorization': `Bearer ${token}`,
+                // },
+                // body: JSON.stringify({ completed })
             });
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             const data = await response.json();
             console.log('Task status updated:', data);
-            fetchTasks(today.toISOString().split('T')[0]); // 변경된 할 일 목록을 다시 가져옵니다.
+            addCheckButtonListeners();
+            // fetchTasks(today.toISOString().split('T')[0]); // 변경된 할 일 목록을 다시 가져옵니다.
         } catch (error) {
             console.error('Error updating task status:', error);
         }
     }
-
-    // 체크 버튼 이벤트 리스너 추가
-    function addCheckButtonListeners() {
-        const checkButtons = document.querySelectorAll('.check-button');
-        checkButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const taskElement = this.closest('.task');
-                const taskId = taskElement.dataset.id;
-                const completed = !taskElement.classList.contains('completed');
-                updateTaskStatus(taskId, completed);
-            });
-        });
-    }
-    
-
-    // 폼 제출 이벤트 리스너
-    taskForm.addEventListener('submit', function(event) {
-        event.preventDefault();
-
-        const newTask = {
-            title: taskTitleInput.value.trim(),
-            time: taskTimeInput.value,
-            completed: false,
-            type: taskTypeSelect.value,
-            repeat_days: Array.from(repeatDaysInputs).filter(input => input.checked).map(input => parseInt(input.value))
-        };
-
-        createTask(newTask);
-
-    
-        // 입력 필드 초기화
-        if (taskTitleInput) taskTitleInput.value = '';
-        if (taskTimeInput) taskTimeInput.value = '';
-        if (taskTypeSelect) taskTypeSelect.value = 'MEAL';
-        if (repeatDaysInputs) repeatDaysInputs.forEach(input => input.checked = false);
-    });
-//
-
-    taskForm.addEventListener('submit', function(event) {
-        event.preventDefault();
-
-        const newTask = {
-            title: taskTitleInput.value.trim(),
-            time: taskTimeInput.value,
-            completed: false,
-            type: taskTypeSelect.value,
-            repeat_days: Array.from(repeatDaysInputs).filter(input => input.checked).map(input => parseInt(input.value))
-        };
-
-        createTask(newTask);
-
-          // 입력 필드 초기화
-          taskTitleInput.value = '';
-          taskTimeInput.value = '';
-          taskTypeSelect.value = 'MEAL';
-          repeatDaysInputs.forEach(input => input.checked = false);
-      });
-    //
-
-
     tasks.forEach(task => {
         const checkButton = task.querySelector('.task-status img');
         checkButton.addEventListener('click', () => {
             task.classList.toggle('completed');
         });
+    });
+
+   // 체크 버튼 이벤트 리스너 추가
+   function addCheckButtonListeners() {
+    const checkButtons = document.querySelectorAll('.check-button');
+    checkButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const taskElement = this.closest('.task');
+            if (taskElement) {
+                const taskId = taskElement.dataset.id;
+                const completed = !taskElement.classList.contains('completed');
+                updateTaskStatus(taskId, completed);
+                taskElement.classList.toggle('completed');
+                const taskTitle = taskElement.querySelector('.task-title');
+                if (completed) {
+                    taskTitle.style.textDecoration = 'line-through';
+                    this.src = '/assets/check_activated.svg';
+                } else {
+                    taskTitle.style.textDecoration = 'none';
+                    this.src = '/assets/check_unactivated.svg';
+                }
+            } else {
+                console.error('taskElement not found');
+            }
+        });
+    });
+}
+
+    // 폼 제출 이벤트 리스너
+    if (taskForm) {
+        taskForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const newTask = {
+                title: taskTitleInput.value.trim(),
+                time: taskTimeInput.value,
+                completed: false,
+                type: taskTypeSelect.value,
+                repeat_days: Array.from(repeatDaysInputs).filter(input => input.checked).map(input => parseInt(input.value))
+            };
+
+            createTask(newTask);
+
+            // 입력 필드 초기화
+            if (taskTitleInput) taskTitleInput.value = '';
+            if (taskTimeInput) taskTimeInput.value = '';
+            if (taskTypeSelect) taskTypeSelect.value = 'MEAL';
+            if (repeatDaysInputs) repeatDaysInputs.forEach(input => input.checked = false);
+        });
+    }
+
+    tasks.forEach(task => {
+        const checkButton = task.querySelector('.task-status img');
+        if (checkButton) {
+            checkButton.addEventListener('click', () => {
+                task.classList.toggle('completed');
+            });
+        } else {
+            console.error('checkButton not found in task');
+        }
     });
 
     options.forEach(option => {
@@ -237,7 +245,7 @@ document.addEventListener("DOMContentLoaded", function() {
             // 선택된 옵션 저장
             selectedOption = this;
             // '다음' 버튼 활성화
-            submitButton.disabled = false;
+            if (submitButton) submitButton.disabled = false;
         });
     });
 
@@ -245,7 +253,7 @@ document.addEventListener("DOMContentLoaded", function() {
     function resetOptionAndButton() {
         options.forEach(option => option.classList.remove('selected'));
         selectedOption = null;
-        submitButton.disabled = true;
+        if (submitButton) submitButton.disabled = true;
     }
 
     // 시간 유효성 검사
@@ -257,6 +265,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // 약물 등록 폼 유효성 검사
     function validateMedicationForm() {
+        if (!medicationNameInput || !hourInput || !minuteInput) return;
+
         const medicationName = medicationNameInput.value.trim();
         const hour = hourInput.value.trim();
         const minute = minuteInput.value.trim();
@@ -266,28 +276,34 @@ document.addEventListener("DOMContentLoaded", function() {
         // 시간 유효성 검사
         if (hour || minute) {
             if (!isTimeValid) {
-                errorMessage.classList.remove('hidden');
+                if (errorMessage) errorMessage.classList.remove('hidden');
             } else {
-                errorMessage.classList.add('hidden');
+                if (errorMessage) errorMessage.classList.add('hidden');
             }
         } else {
-            errorMessage.classList.add('hidden');
+            if (errorMessage) errorMessage.classList.add('hidden');
         }
 
         // 버튼 활성화 조건 검사
         if (medicationName && hour && minute && selectedDays > 0 && isTimeValid) {
-            submitButton3.classList.add('enabled');
-            submitButton3.classList.remove('disabled');
-            submitButton3.disabled = false;
+            if (submitButton3) {
+                submitButton3.classList.add('enabled');
+                submitButton3.classList.remove('disabled');
+                submitButton3.disabled = false;
+            }
         } else {
-            submitButton3.classList.remove('enabled');
-            submitButton3.classList.add('disabled');
-            submitButton3.disabled = true;
+            if (submitButton3) {
+                submitButton3.classList.remove('enabled');
+                submitButton3.classList.add('disabled');
+                submitButton3.disabled = true;
+            }
         }
     }
 
     // 할 일 등록 폼 유효성 검사 (modal2)
     function validateTaskForm() {
+        if (!taskNameInput2 || !hourInput2 || !minuteInput2) return;
+
         const taskName = taskNameInput2.value.trim();
         const hour = hourInput2.value.trim();
         const minute = minuteInput2.value.trim();
@@ -297,23 +313,27 @@ document.addEventListener("DOMContentLoaded", function() {
         // 시간 유효성 검사
         if (hour || minute) {
             if (!isTimeValid) {
-                errorMessage2.classList.remove('hidden');
+                if (errorMessage2) errorMessage2.classList.remove('hidden');
             } else {
-                errorMessage2.classList.add('hidden');
+                if (errorMessage2) errorMessage2.classList.add('hidden');
             }
         } else {
-            errorMessage2.classList.add('hidden');
+            if (errorMessage2) errorMessage2.classList.add('hidden');
         }
 
         // 버튼 활성화 조건 검사
         if (taskName && hour && minute && selectedDays > 0 && isTimeValid) {
-            submitButton2.classList.add('enabled');
-            submitButton2.classList.remove('disabled');
-            submitButton2.disabled = false;
+            if (submitButton2) {
+                submitButton2.classList.add('enabled');
+                submitButton2.classList.remove('disabled');
+                submitButton2.disabled = false;
+            }
         } else {
-            submitButton2.classList.remove('enabled');
-            submitButton2.classList.add('disabled');
-            submitButton2.disabled = true;
+            if (submitButton2) {
+                submitButton2.classList.remove('enabled');
+                submitButton2.classList.add('disabled');
+                submitButton2.disabled = true;
+            }
         }
     }
 
@@ -321,7 +341,7 @@ document.addEventListener("DOMContentLoaded", function() {
     function updateRecordedEmotionStatus() {
         const selectedDaysCount = Array.from(medicationDays).filter(dayButton => dayButton.classList.contains('selected')).length;
         const statusText = selectedDaysCount > 0 ? `${selectedDaysCount}회` : '없음';
-        recordedEmotionStatus.textContent = statusText;
+        if (recordedEmotionStatus) recordedEmotionStatus.textContent = statusText;
     }
 
     // 모달 열기 및 닫기
@@ -331,18 +351,20 @@ document.addEventListener("DOMContentLoaded", function() {
         modals.forEach(m => m.classList.remove('show'));
 
         // 모달 백드롭 숨기기
-        modalBackdrop.classList.remove('show');
+        if (modalBackdrop) modalBackdrop.classList.remove('show');
 
         // 지정된 모달 열기
-        modal.classList.add('show');
-        modalBackdrop.classList.add('show');
+        if (modal) {
+            modal.classList.add('show');
+            if (modalBackdrop) modalBackdrop.classList.add('show');
+        }
     }
 
     function closeModal() {
-        modal1.classList.remove('show');
-        modal2.classList.remove('show');
-        modal3.classList.remove('show');
-        modalBackdrop.classList.remove('show');
+        if (modal1) modal1.classList.remove('show');
+        if (modal2) modal2.classList.remove('show');
+        if (modal3) modal3.classList.remove('show');
+        if (modalBackdrop) modalBackdrop.classList.remove('show');
         resetOptionAndButton(); // 모달 닫을 때 선택된 옵션과 버튼 상태 초기화
     }
 
@@ -363,66 +385,85 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // 이벤트 리스너 등록
-    plusButton.addEventListener('click', () => openModal(modal1));
+    if (plusButton) {
+        plusButton.addEventListener('click', () => openModal(modal1));
+    }
 
     const closeModalButtons = document.querySelectorAll('.close');
     closeModalButtons.forEach(button => {
-        button.addEventListener('click', closeModal);
-    });
-
-    submitButton.addEventListener('click', handleSubmit);
-
-    [medicationNameInput, hourInput, minuteInput].forEach(input => {
-        input.addEventListener('input', validateMedicationForm);
-    });
-
-    medicationDays.forEach(dayButton => {
-        dayButton.addEventListener('click', () => {
-            dayButton.classList.toggle('selected');
-            validateMedicationForm();
-        });
-    });
-
-    [taskNameInput2, hourInput2, minuteInput2].forEach(input => {
-        input.addEventListener('input', validateTaskForm);
-    });
-
-    taskDays.forEach(dayButton => {
-        dayButton.addEventListener('click', () => {
-            dayButton.classList.toggle('selected');
-            validateTaskForm();
-        });
-    });
-
-    submitButton3.addEventListener('click', () => {
-        if (!submitButton3.disabled) {
-            updateRecordedEmotionStatus();
-
-            // 입력 필드 초기화
-            medicationNameInput.value = '';
-            hourInput.value = '';
-            minuteInput.value = '';
-            medicationDays.forEach(dayButton => dayButton.classList.remove('selected'));
-            validateMedicationForm();
+        if (button) {
+            button.addEventListener('click', closeModal);
         }
     });
 
-    submitButton2.addEventListener('click', () => {
-        if (!submitButton2.disabled) {
-            // 입력 필드 초기화
-            taskNameInput2.value = '';
-            hourInput2.value = '';
-            minuteInput2.value = '';
-            taskDays.forEach(dayButton => dayButton.classList.remove('selected'));
-            validateTaskForm();
-        }
-    });
+    if (submitButton) {
+        submitButton.addEventListener('click', handleSubmit);
+    }
+
+    if (medicationNameInput && hourInput && minuteInput) {
+        [medicationNameInput, hourInput, minuteInput].forEach(input => {
+            input.addEventListener('input', validateMedicationForm);
+        });
+    }
+
+    if (medicationDays) {
+        medicationDays.forEach(dayButton => {
+            dayButton.addEventListener('click', () => {
+                dayButton.classList.toggle('selected');
+                validateMedicationForm();
+            });
+        });
+    }
+
+    if (taskNameInput2 && hourInput2 && minuteInput2) {
+        [taskNameInput2, hourInput2, minuteInput2].forEach(input => {
+            input.addEventListener('input', validateTaskForm);
+        });
+    }
+
+    if (taskDays) {
+        taskDays.forEach(dayButton => {
+            dayButton.addEventListener('click', () => {
+                dayButton.classList.toggle('selected');
+                validateTaskForm();
+            });
+        });
+    }
+
+    if (submitButton3) {
+        submitButton3.addEventListener('click', () => {
+            if (!submitButton3.disabled) {
+                updateRecordedEmotionStatus();
+
+                // 입력 필드 초기화
+                if (medicationNameInput) medicationNameInput.value = '';
+                if (hourInput) hourInput.value = '';
+                if (minuteInput) minuteInput.value = '';
+                medicationDays.forEach(dayButton => dayButton.classList.remove('selected'));
+                validateMedicationForm();
+            }
+        });
+    }
+
+    if (submitButton2) {
+        submitButton2.addEventListener('click', () => {
+            if (!submitButton2.disabled) {
+                // 입력 필드 초기화
+                if (taskNameInput2) taskNameInput2.value = '';
+                if (hourInput2) hourInput2.value = '';
+                if (minuteInput2) minuteInput2.value = '';
+                taskDays.forEach(dayButton => dayButton.classList.remove('selected'));
+                validateTaskForm();
+            }
+        });
+    }
 
     // 초기화
     displayWeekCalendar();
-    document.getElementById('full-date').textContent = fullDate;
-    document.getElementById('day-of-week').textContent = `${dayOfWeek}요일`;
-
+    const fullDateElement = document.getElementById('full-date');
+    const dayOfWeekElement = document.getElementById('day-of-week');
+    if (fullDateElement) fullDateElement.textContent = fullDate;
+    if (dayOfWeekElement) dayOfWeekElement.textContent = `${dayOfWeek}요일`;
 
     // 오늘의 할 일 목록 가져오기 호출
     fetchTasks(today.toISOString().split('T')[0]);

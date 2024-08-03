@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
+
     const daysOfWeek = ['월', '화', '수', '목', '금', '토', '일'];
     const today = new Date();
     const currentDay = today.getDay(); // 0 (일요일)부터 6 (토요일)까지의 숫자
@@ -11,6 +12,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const dayOfWeek = daysOfWeek[(currentDay + 6) % 7]; // 일요일을 월요일로 맞추기
 
     const weekCalendar = document.getElementById('week-calendar');
+    const taskList = document.querySelector('.tasks');
     const plusButton = document.getElementById('plus-button');
     const modalBackdrop = document.querySelector('.modal-backdrop');
     const modal2 = document.getElementById('modal2');
@@ -20,44 +22,83 @@ document.addEventListener("DOMContentLoaded", function() {
     const submitButton2 = document.getElementById('submit-button2');
     const taskNameInput2 = document.getElementById('reason2');
     const taskDays = document.querySelectorAll('.repeat-btn');
-    const tasks = document.querySelectorAll('.task');
 
-    // 현재 날짜 정보와 주간 날짜 생성
-    function calculateWeekDates() {
-        const startDate = new Date(today);
-        startDate.setDate(currentDate - (currentDay === 0 ? 6 : currentDay - 1));
-
-        const weekDates = [];
-        for (let i = 0; i < 7; i++) {
-            const date = new Date(startDate);
-            date.setDate(startDate.getDate() + i);
-            weekDates.push({
-                day: daysOfWeek[i],
-                date: date.getDate()
+    // Fetch tasks from API
+    async function fetchTasks() {
+        const token = localStorage.getItem('access_token');
+        try {
+            const response = await fetch('http://127.0.0.1:8000/tasks/', {
+                headers: {
+                    'Authorization': 'Bearer <token>'
+                }
             });
+            if (response.ok) {
+                const data = await response.json();
+                displayTasks(data);
+            } else {
+                handleError(response.status);
+            }
+        } catch (error) {
+            console.error('Error fetching tasks:', error);
         }
-        return weekDates;
     }
 
-    // 주간 달력 표시
-    function displayWeekCalendar() {
-        const weekDates = calculateWeekDates();
-        weekCalendar.innerHTML = weekDates.map(({ day, date }, index) => `
-            <div class="day ${index === (currentDay === 0 ? 6 : currentDay - 1) ? 'active' : ''}">
-                <span class="day-name">${day}</span>
-                <span class="day-date">${date}</span>
+    // Display tasks
+    function displayTasks(tasks) {
+        taskList.innerHTML = tasks.map(task => `
+            <div class="task ${task.completed ? 'completed' : ''}" data-id="${task.id}">
+                <div class="task-icon"><img src="/assets/default.png" alt=""></div>
+                <div class="task-info">
+                    <div class="task-title">${task.title}</div>
+                    <div class="task-time">${task.time}</div>
+                </div>
+                <div class="task-status">
+                    <img src="/assets/check_unactivated.svg" alt="체크" data-completed="${task.completed}">
+                </div>
             </div>
         `).join('');
+
+        document.querySelectorAll('.task-status img').forEach(img => {
+            img.addEventListener('click', toggleTaskCompletion);
+        });
     }
 
-    tasks.forEach(task => {
-        const checkButton = task.querySelector('.task-status img');
-        checkButton.addEventListener('click', () => {
-            task.classList.toggle('completed');
-        });
-    });
+    // Toggle task completion
+    function toggleTaskCompletion(event) {
+        const taskElement = event.target.closest('.task');
+        const taskId = taskElement.dataset.id;
+        const isCompleted = event.target.dataset.completed === 'true';
 
-    // 모달 열기 및 닫기
+        // Toggle UI
+        taskElement.classList.toggle('completed');
+        event.target.dataset.completed = !isCompleted;
+
+        // Update server (assuming there's an endpoint for this)
+        fetch(`http://127.0.0.1:8000/senior_tasks/`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer <token>'
+            },
+            body: JSON.stringify({ completed: !isCompleted })
+        }).catch(error => console.error('Error updating task:', error));
+    }
+
+    // Handle errors
+    function handleError(status) {
+        if (status === 403) {
+            alert('시니어의 할 일을 조회할 수 있는 권한이 없습니다.');
+        } else {
+            alert('할 일을 불러오는 데 오류가 발생했습니다.');
+        }
+    }
+
+    // Call the fetchTasks function on page load
+    fetchTasks();
+
+    // Modal open/close
+    plusButton.addEventListener('click', () => openModal(modal2));
+
     function openModal(modal) {
         modal.classList.add('show');
         modalBackdrop.classList.add('show');
@@ -68,7 +109,12 @@ document.addEventListener("DOMContentLoaded", function() {
         modalBackdrop.classList.remove('show');
     }
 
-    // 할 일 등록 폼 유효성 검사
+    const closeModalButtons = document.querySelectorAll('.close');
+    closeModalButtons.forEach(button => {
+        button.addEventListener('click', closeModal);
+    });
+
+    // Task form validation
     function validateTaskForm() {
         const taskName = taskNameInput2.value.trim();
         const hour = hourInput2.value.trim();
@@ -105,37 +151,26 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function handleSubmit() {
         if (!submitButton2.disabled) {
-            const optionText = selectedOption.querySelector('.option-title').textContent;
-            if (optionText === "다른 할 일 추가하기") {
-                openModal(modal2);
-            }
-            resetOptionAndButton(); 
-        }
-    }
+            const task = {
+                title: taskNameInput2.value,
+                time: `${hourInput2.value}:${minuteInput2.value}`,
+                repeat_days: Array.from(taskDays).filter(dayButton => dayButton.classList.contains('selected')).map(dayButton => daysOfWeek.indexOf(dayButton.textContent))
+            };
+            // Here you might want to send task to the server
+            console.log('New task:', task);
 
-    function resetOptionAndButton() {
-        selectedOption = null;
-        submitButton.disabled = true;
-        submitButton.classList.add('disabled');
-        submitButton.classList.remove('enabled');
-    }
+            closeModal();
 
-    plusButton.addEventListener('click', () => openModal(modal2));
-
-    const closeModalButtons = document.querySelectorAll('.close');
-    closeModalButtons.forEach(button => {
-        button.addEventListener('click', closeModal);
-    });
-
-    submitButton2.addEventListener('click', () => {
-        if (!submitButton2.disabled) {
+            // Reset form
             taskNameInput2.value = '';
             hourInput2.value = '';
             minuteInput2.value = '';
             taskDays.forEach(dayButton => dayButton.classList.remove('selected'));
             validateTaskForm();
         }
-    });
+    }
+
+    submitButton2.addEventListener('click', handleSubmit);
 
     [taskNameInput2, hourInput2, minuteInput2].forEach(input => {
         input.addEventListener('input', validateTaskForm);
@@ -147,6 +182,33 @@ document.addEventListener("DOMContentLoaded", function() {
             validateTaskForm();
         });
     });
+
+    // Week calendar display
+    function calculateWeekDates() {
+        const startDate = new Date(today);
+        startDate.setDate(currentDate - (currentDay === 0 ? 6 : currentDay - 1));
+
+        const weekDates = [];
+        for (let i = 0; i < 7; i++) {
+            const date = new Date(startDate);
+            date.setDate(startDate.getDate() + i);
+            weekDates.push({
+                day: daysOfWeek[i],
+                date: date.getDate()
+            });
+        }
+        return weekDates;
+    }
+
+    function displayWeekCalendar() {
+        const weekDates = calculateWeekDates();
+        weekCalendar.innerHTML = weekDates.map(({ day, date }, index) => `
+            <div class="day ${index === (currentDay === 0 ? 6 : currentDay - 1) ? 'active' : ''}">
+                <span class="day-name">${day}</span>
+                <span class="day-date">${date}</span>
+            </div>
+        `).join('');
+    }
 
     displayWeekCalendar();
     document.getElementById('full-date').textContent = fullDate;
